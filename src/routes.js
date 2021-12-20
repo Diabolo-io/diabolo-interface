@@ -2,10 +2,7 @@ import Home from "./views/Home/Home.js";
 import Dashboard from "./views/Dashboard/Dashboard.js";
 import Connect from "./views/Connect/Connect.js";
 
-import {
-  HomeIcon,
-  PersonIcon,
-} from "./components/Icons/Icons";
+import { HomeIcon, PersonIcon } from "./components/Icons/Icons";
 
 var dashRoutes = [
   {
@@ -14,8 +11,6 @@ var dashRoutes = [
     icon: <HomeIcon color="inherit" />,
     component: Home,
     layout: "/",
-    connectedAccess: true,
-    disconnectedAccess: true,
   },
   {
     path: "dashboard",
@@ -23,8 +18,6 @@ var dashRoutes = [
     icon: <PersonIcon color="inherit" />,
     component: Dashboard,
     layout: "/",
-    connectedAccess: true,
-    disconnectedAccess: true,
   },
   {
     path: "/connect",
@@ -32,8 +25,6 @@ var dashRoutes = [
     icon: <PersonIcon color="inherit" />,
     component: Connect,
     layout: "/user",
-    connectedAccess: false,
-    disconnectedAccess: false,
   },
 ];
 export default dashRoutes;

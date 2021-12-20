@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -27,15 +27,11 @@ import { Separator } from "../../components/Separator/Separator";
 import { SidebarHelp } from "../../components/Sidebar/SidebarHelp";
 import { Notifs } from "../../components/Notifs/Notifs";
 
-import { useWeb3React } from "@web3-react/core";
-
 function Sidebar(props) {
-  const { active } = useWeb3React();
-
   // to check for active links and opened collapses
   let location = useLocation();
 
-  const mainPanel = React.useRef();
+  const mainPanel = useRef();
   let variantChange = "0.2s linear";
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -64,221 +60,111 @@ function Sidebar(props) {
         return null;
       }
 
-      if (active) {
-        if (prop.connectedAccess) {
-          return (
-            <NavLink to={prop.layout + prop.path}>
-              {activeRoute(prop.layout + prop.path) === "active" ? (
-                <Button
-                  boxSize="initial"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  boxShadow={sidebarActiveShadow}
-                  bg={activeBg}
-                  transition={variantChange}
-                  mb={{
-                    xl: "12px",
-                  }}
-                  mx={{
-                    xl: "auto",
-                  }}
-                  ps={{
-                    sm: "10px",
-                    xl: "16px",
-                  }}
-                  py="12px"
-                  borderRadius="15px"
-                  _hover="none"
-                  w="100%"
-                  _active={{
-                    bg: "inherit",
-                    transform: "none",
-                    borderColor: "transparent",
-                  }}
-                  _focus={{
-                    boxShadow: "0px 7px 11px rgba(0, 0, 0, 0.04)",
-                  }}
-                >
-                  <Flex>
-                    {typeof prop.icon === "string" ? (
-                      <Icon>{prop.icon}</Icon>
-                    ) : (
-                      <IconBox
-                        bg="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
-                        color="white"
-                        h="30px"
-                        w="30px"
-                        me="12px"
-                        transition={variantChange}
-                      >
-                        {prop.icon}
-                      </IconBox>
-                    )}
-                    <Text color={activeColor} my="auto" fontSize="sm">
-                      {prop.name}
-                    </Text>
-                  </Flex>
-                </Button>
-              ) : (
-                <Button
-                  boxSize="initial"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  bg="transparent"
-                  mb={{
-                    xl: "12px",
-                  }}
-                  mx={{
-                    xl: "auto",
-                  }}
-                  py="12px"
-                  ps={{
-                    sm: "10px",
-                    xl: "16px",
-                  }}
-                  borderRadius="15px"
-                  _hover="none"
-                  w="100%"
-                  _active={{
-                    bg: "inherit",
-                    transform: "none",
-                    borderColor: "transparent",
-                  }}
-                  _focus={{
-                    boxShadow: "none",
-                  }}
-                >
-                  <Flex>
-                    {typeof prop.icon === "string" ? (
-                      <Icon>{prop.icon}</Icon>
-                    ) : (
-                      <IconBox
-                        bg={inactiveBg}
-                        color="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
-                        h="30px"
-                        w="30px"
-                        me="12px"
-                        transition={variantChange}
-                      >
-                        {prop.icon}
-                      </IconBox>
-                    )}
-                    <Text color={inactiveColor} my="auto" fontSize="sm">
-                      {prop.name}
-                    </Text>
-                  </Flex>
-                </Button>
-              )}
-            </NavLink>
-          );
-        }
-      } else if (prop.disconnectedAccess == true) {
-        return (
-          <NavLink to={prop.layout + prop.path}>
-            {activeRoute(prop.layout + prop.path) === "active" ? (
-              <Button
-                boxSize="initial"
-                justifyContent="flex-start"
-                alignItems="center"
-                boxShadow={sidebarActiveShadow}
-                bg={activeBg}
-                transition={variantChange}
-                mb={{
-                  xl: "12px",
-                }}
-                mx={{
-                  xl: "auto",
-                }}
-                ps={{
-                  sm: "10px",
-                  xl: "16px",
-                }}
-                py="12px"
-                borderRadius="15px"
-                _hover="none"
-                w="100%"
-                _active={{
-                  bg: "inherit",
-                  transform: "none",
-                  borderColor: "transparent",
-                }}
-                _focus={{
-                  boxShadow: "0px 7px 11px rgba(0, 0, 0, 0.04)",
-                }}
-              >
-                <Flex>
-                  {typeof prop.icon === "string" ? (
-                    <Icon>{prop.icon}</Icon>
-                  ) : (
-                    <IconBox
-                      bg="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
-                      color="white"
-                      h="30px"
-                      w="30px"
-                      me="12px"
-                      transition={variantChange}
-                    >
-                      {prop.icon}
-                    </IconBox>
-                  )}
-                  <Text color={activeColor} my="auto" fontSize="sm">
-                    {prop.name}
-                  </Text>
-                </Flex>
-              </Button>
-            ) : (
-              <Button
-                boxSize="initial"
-                justifyContent="flex-start"
-                alignItems="center"
-                bg="transparent"
-                mb={{
-                  xl: "12px",
-                }}
-                mx={{
-                  xl: "auto",
-                }}
-                py="12px"
-                ps={{
-                  sm: "10px",
-                  xl: "16px",
-                }}
-                borderRadius="15px"
-                _hover="none"
-                w="100%"
-                _active={{
-                  bg: "inherit",
-                  transform: "none",
-                  borderColor: "transparent",
-                }}
-                _focus={{
-                  boxShadow: "none",
-                }}
-              >
-                <Flex>
-                  {typeof prop.icon === "string" ? (
-                    <Icon>{prop.icon}</Icon>
-                  ) : (
-                    <IconBox
-                      bg={inactiveBg}
-                      color="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
-                      h="30px"
-                      w="30px"
-                      me="12px"
-                      transition={variantChange}
-                    >
-                      {prop.icon}
-                    </IconBox>
-                  )}
-                  <Text color={inactiveColor} my="auto" fontSize="sm">
-                    {prop.name}
-                  </Text>
-                </Flex>
-              </Button>
-            )}
-          </NavLink>
-        );
-      }
+      return (
+        <NavLink to={prop.layout + prop.path}>
+          {activeRoute(prop.layout + prop.path) === "active" ? (
+            <Button
+              boxSize="initial"
+              justifyContent="flex-start"
+              alignItems="center"
+              boxShadow={sidebarActiveShadow}
+              bg={activeBg}
+              transition={variantChange}
+              mb={{
+                xl: "12px",
+              }}
+              mx={{
+                xl: "auto",
+              }}
+              ps={{
+                sm: "10px",
+                xl: "16px",
+              }}
+              py="12px"
+              borderRadius="15px"
+              _hover="none"
+              w="100%"
+              _active={{
+                bg: "inherit",
+                transform: "none",
+                borderColor: "transparent",
+              }}
+              _focus={{
+                boxShadow: "0px 7px 11px rgba(0, 0, 0, 0.04)",
+              }}
+            >
+              <Flex>
+                {typeof prop.icon === "string" ? (
+                  <Icon>{prop.icon}</Icon>
+                ) : (
+                  <IconBox
+                    bg="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
+                    color="white"
+                    h="30px"
+                    w="30px"
+                    me="12px"
+                    transition={variantChange}
+                  >
+                    {prop.icon}
+                  </IconBox>
+                )}
+                <Text color={activeColor} my="auto" fontSize="sm">
+                  {prop.name}
+                </Text>
+              </Flex>
+            </Button>
+          ) : (
+            <Button
+              boxSize="initial"
+              justifyContent="flex-start"
+              alignItems="center"
+              bg="transparent"
+              mb={{
+                xl: "12px",
+              }}
+              mx={{
+                xl: "auto",
+              }}
+              py="12px"
+              ps={{
+                sm: "10px",
+                xl: "16px",
+              }}
+              borderRadius="15px"
+              _hover="none"
+              w="100%"
+              _active={{
+                bg: "inherit",
+                transform: "none",
+                borderColor: "transparent",
+              }}
+              _focus={{
+                boxShadow: "none",
+              }}
+            >
+              <Flex>
+                {typeof prop.icon === "string" ? (
+                  <Icon>{prop.icon}</Icon>
+                ) : (
+                  <IconBox
+                    bg={inactiveBg}
+                    color="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
+                    h="30px"
+                    w="30px"
+                    me="12px"
+                    transition={variantChange}
+                  >
+                    {prop.icon}
+                  </IconBox>
+                )}
+                <Text color={inactiveColor} my="auto" fontSize="sm">
+                  {prop.name}
+                </Text>
+              </Flex>
+            </Button>
+          )}
+        </NavLink>
+      );
     });
   };
 
@@ -300,7 +186,6 @@ function Sidebar(props) {
     <Box pt={"25px"} mb="12px">
       <Link
         href={`${process.env.PUBLIC_URL}/#/`}
-        target="_blank"
         display="flex"
         lineHeight="100%"
         mb="30px"
@@ -357,7 +242,7 @@ export function SidebarResponsive(props) {
   // to check for active links and opened collapses
   let location = useLocation();
 
-  const mainPanel = React.useRef();
+  const mainPanel = useRef();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
@@ -515,7 +400,6 @@ export function SidebarResponsive(props) {
     <Box pt={"35px"} mb="8px">
       <Link
         href={`${process.env.PUBLIC_URL}/#/`}
-        target="_blank"
         display="flex"
         lineHeight="100%"
         mb="30px"
@@ -535,7 +419,7 @@ export function SidebarResponsive(props) {
 
   // SIDEBAR
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  const btnRef = useRef();
   // Color variables
   return (
     <Flex
@@ -548,7 +432,7 @@ export function SidebarResponsive(props) {
         w="18px"
         h="18px"
         ref={btnRef}
-        colorScheme="teal"
+        colorScheme="purple"
         onClick={onOpen}
       />
       <Drawer
