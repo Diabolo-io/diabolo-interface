@@ -46,7 +46,6 @@ export default function UserNavbar(props) {
   var brand = (
     <Link
       href={`${process.env.PUBLIC_URL}/#/`}
-      target="_blank"
       display="flex"
       lineHeight="100%"
       fontWeight="bold"
@@ -55,7 +54,7 @@ export default function UserNavbar(props) {
       color={mainText}
     >
       <Image w="19px" h="11px" me="5px" src={DiaboloLogo} />
-      <Text fontsize="sm" mt="3px">
+      <Text fontSize="sm" mt="3px">
         {logoText}
       </Text>
     </Link>

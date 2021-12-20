@@ -57,7 +57,7 @@ export default function Configurator(props) {
                     w="50%"
                     p="8px 32px"
                     me="8px"
-                    colorScheme="teal"
+                    colorScheme="purple"
                     borderColor="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
                     color="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
                     variant="outline"

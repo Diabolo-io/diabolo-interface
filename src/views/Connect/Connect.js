@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Chakra imports
 import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import WalletModal from "../../components/WalletModal/WalletModal";
@@ -34,7 +34,7 @@ function Connect() {
   const textColor = useColorModeValue("gray.400", "white");
 
   // log the walletconnect URI
-  React.useEffect(() => {
+  useEffect(() => {
     const logURI = (uri) => {
       console.log("WalletConnect URI", uri);
     };

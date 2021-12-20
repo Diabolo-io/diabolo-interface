@@ -16,7 +16,7 @@ import MainPanel from "../components/Layout/MainPanel";
 import PanelContainer from "../components/Layout/PanelContainer";
 import PanelContent from "../components/Layout/PanelContent";
 
-export default function Dashboard(props) {
+export default function Layout(props) {
   const { ...rest } = props;
   // states and functions
   const [sidebarVariant, setSidebarVariant] = useState("transparent");
@@ -27,7 +27,7 @@ export default function Dashboard(props) {
   const getRoute = () => {
     return window.location.pathname !== "/full-screen-maps";
   };
-  
+
   const getActiveRoute = (routes) => {
     let activeRoute = "Default Brand Text";
     for (let i = 0; i < routes.length; i++) {
