@@ -6,7 +6,7 @@ import { fromWeiWithDecimals } from "./decimals";
 
 import { ethers } from "ethers";
 
-import { VESTING_INFO, VESTING_ABI } from "./constants";
+import { VESTING_INFO } from "./constants";
 
 export function useVesting() {
   const [vesting, setVesting] = useState(undefined);
@@ -33,8 +33,8 @@ export function useVesting() {
 
       for (const lockup in VESTING_INFO) {
         contract = new ethers.Contract(
-          VESTING_INFO[lockup].smartContractAddress,
-          VESTING_ABI,
+          VESTING_INFO[lockup].address,
+          VESTING_INFO[lockup].abi,
           library
         );
 
@@ -76,7 +76,7 @@ export function useVesting() {
             unlockCliff: unlockCliff,
             unlockEnd: unlockEnd,
             token: token,
-            address: VESTING_INFO[lockup].smartContractAddress,
+            address: VESTING_INFO[lockup].address,
             name: VESTING_INFO[lockup].name,
           };
         }

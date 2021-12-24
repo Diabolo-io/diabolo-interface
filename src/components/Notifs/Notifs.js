@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 // Chakra Icons
-import { ItemContent } from "components/Menu/ItemContent";
+import { ItemContent } from "../Menu/ItemContent";
 import { useNotifs } from "../../utils/notifs";
 
 export function Notifs(props) {

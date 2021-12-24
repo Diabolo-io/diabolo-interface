@@ -8,19 +8,19 @@ import { CHAIN_ID, CHAIN_INFO } from "./constants";
 const POLLING_INTERVAL = 12000;
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [parseInt(CHAIN_ID)],
+  supportedChainIds: [4],
 });
 
 export const walletconnect = new WalletConnectConnector({
-  rpc: { [CHAIN_ID]: CHAIN_INFO[CHAIN_ID].infura },
+  rpc: { [4]: CHAIN_INFO[4].infura },
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,
 });
 
 export const ledger = new LedgerConnector({
-  chainId: CHAIN_ID,
-  url: CHAIN_INFO[CHAIN_ID].infura,
+  chainId: 1,
+  url: CHAIN_INFO[1].infura,
   pollingInterval: POLLING_INTERVAL,
 });
 /*
