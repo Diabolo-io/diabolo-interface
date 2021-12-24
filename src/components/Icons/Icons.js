@@ -120,6 +120,69 @@ export const DashboardLogoWhite = createIcon({
   ),
 });
 
+export const Ethereum = createIcon({
+  displayName: "Ethereum",
+  viewBox: "0 0 24 24",
+  path: (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="10" cy="10" r="10" fill="#F7F9FD"></circle>
+      <g clip-path="url(#ethereum-svg-clip-path)">
+        <g opacity="0.6">
+          <path
+            opacity="0.6"
+            d="M10.0075 8.17242L5.71295 10.1256L10.0075 12.6628L14.3004 10.1256L10.0075 8.17242Z"
+            fill="#010101"
+          ></path>
+        </g>
+        <g opacity="0.45">
+          <path
+            opacity="0.45"
+            d="M5.71295 10.1255L10.0075 12.6628V3L5.71295 10.1255Z"
+            fill="#010101"
+          ></path>
+        </g>
+        <g opacity="0.8">
+          <path
+            opacity="0.8"
+            d="M10.0076 3V12.6628L14.3005 10.1255L10.0076 3Z"
+            fill="#010101"
+          ></path>
+        </g>
+        <g opacity="0.45">
+          <path
+            opacity="0.45"
+            d="M5.71295 10.9392L10.0075 16.9895V13.4765L5.71295 10.9392Z"
+            fill="#010101"
+          ></path>
+        </g>
+        <g opacity="0.8">
+          <path
+            opacity="0.8"
+            d="M10.0076 13.4765V16.9895L14.3039 10.9392L10.0076 13.4765Z"
+            fill="#010101"
+          ></path>
+        </g>
+      </g>
+      <defs>
+        <clipPath id="ethereum-svg-clip-path">
+          <rect
+            width="8.61336"
+            height="14"
+            fill="white"
+            transform="translate(5.70001 3)"
+          ></rect>
+        </clipPath>
+      </defs>
+    </svg>
+  ),
+});
+
 export const ExitIcon = createIcon({
   displayName: "ExitIcon",
   viewBox: "0 0 24 24",
