@@ -19,7 +19,7 @@ import {
 
 import { BsArrowRight } from "react-icons/bs";
 
-import { MAIN_PAGE } from "../../utils/constants";
+import { CHAIN_INFO } from "../../utils/constants";
 import diaboloLogo from "../../assets/img/diabolo-gradient.gif";
 import externalBanner from "../../assets/img/ecosystemDiabolo.png";
 
@@ -171,7 +171,7 @@ export default function Home() {
                   align="center"
                   mt={{ sm: "20px", lg: "40px", xl: "90px" }}
                 >
-                  <Link href={MAIN_PAGE} isExternal>
+                  <Link href={CHAIN_INFO[1].mainPage} isExternal>
                     <Button
                       p="0px"
                       variant="no-hover"
@@ -206,6 +206,9 @@ export default function Home() {
         </Card>
       </Grid>
 
+
+
+{/*todo global data*/}
       <Grid
         templateColumns={{ sm: "1fr", lg: "1fr 1fr 1fr 1fr" }}
         templateRows={{ sm: "repeat(2, 1fr)", lg: "1fr" }}

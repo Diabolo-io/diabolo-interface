@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 // Chakra Icons
 import { ItemContent } from "../Menu/ItemContent";
-import { useNotifs } from "../../utils/notifs";
+import { useNotifs } from "../../utils/offchain";
 
 export function Notifs(props) {
   // Pass the computed styles into the `__css` prop

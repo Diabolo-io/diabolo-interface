@@ -9,7 +9,7 @@ import { fromWeiWithDecimals } from "./decimals";
 export function useBalances() {
   const { account, library, chainId } = useWeb3React();
 
-  const blockNumber = useUpdater();
+  const updater = useUpdater();
 
   const [coinBalance, setCoinBalance] = useState(0);
   const [tokenBalance, setTokenBalance] = useState(0);
@@ -38,7 +38,7 @@ export function useBalances() {
       setCoinBalance(0);
       setTokenBalance(0);
     }
-  }, [account, library, chainId, blockNumber]); // recovery balance amount of token
+  }, [account, library, chainId, updater]); // recovery balance amount of token
 
   return { coinBalance, tokenBalance };
 }

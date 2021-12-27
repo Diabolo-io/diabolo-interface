@@ -6,17 +6,18 @@ import { fromWeiWithDecimals } from "./decimals";
 
 import { ethers } from "ethers";
 
-import { VESTING_INFO } from "./constants";
+import { CHAIN_INFO } from "./constants";
 
+/*todo update with new smart contract*/
 export function useVesting() {
   const [vesting, setVesting] = useState(undefined);
 
   const { account, library, chainId } = useWeb3React();
 
-  const blockNumber = useUpdater();
+  const updater = useUpdater();
 
   useEffect(async () => {
-    if (library && chainId && account) {
+    if (library && chainId && account && CHAIN_INFO[chainId].vesting) {
       let vestingInfos = {};
       let contract,
         claimedAmounts,
@@ -31,10 +32,10 @@ export function useVesting() {
         totalClaimableBalance = 0,
         totalLockedAmounts = 0;
 
-      for (const lockup in VESTING_INFO) {
+      for (const lockup in CHAIN_INFO[chainId].vesting) {
         contract = new ethers.Contract(
-          VESTING_INFO[lockup].address,
-          VESTING_INFO[lockup].abi,
+          CHAIN_INFO[chainId].vesting[lockup].address,
+          CHAIN_INFO[chainId].vesting[lockup].abi,
           library
         );
 
@@ -76,8 +77,8 @@ export function useVesting() {
             unlockCliff: unlockCliff,
             unlockEnd: unlockEnd,
             token: token,
-            address: VESTING_INFO[lockup].address,
-            name: VESTING_INFO[lockup].name,
+            address: CHAIN_INFO[chainId].vesting[lockup].address,
+            name: CHAIN_INFO[chainId].vesting[lockup].name,
           };
         }
 
@@ -103,7 +104,7 @@ export function useVesting() {
     } else {
       setVesting(false);
     }
-  }, [account, library, chainId, blockNumber]); // recovery vesting infos
+  }, [account, library, chainId, updater]); // recovery vesting infos
 
   useEffect(async () => {
     setVesting(undefined);

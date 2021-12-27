@@ -3,12 +3,13 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { LedgerConnector } from "@web3-react/ledger-connector";
 //import { TrezorConnector } from "@web3-react/trezor-connector";
 
-import { CHAIN_ID, CHAIN_INFO } from "./constants";
+import { CHAIN_INFO } from "./constants";
 
 const POLLING_INTERVAL = 12000;
 
+/*todo detect supported network and add it*/
 export const injected = new InjectedConnector({
-  supportedChainIds: [4],
+  supportedChainIds: [1,4],
 });
 
 export const walletconnect = new WalletConnectConnector({

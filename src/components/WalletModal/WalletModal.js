@@ -22,7 +22,7 @@ import IconBox from "../Icons/IconBox";
 import SwitchNetwork from "../SwitchNetwork/SwitchNetwork";
 
 import { useInactiveListener } from "../../utils/wallet";
-import { CHAIN_ID, CHAIN_INFO } from "../../utils/constants";
+import { CHAIN_INFO } from "../../utils/constants";
 
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from "@web3-react/walletconnect-connector";
@@ -60,10 +60,11 @@ function WalletModal(props) {
     if (error instanceof NoEthereumProviderError) {
       return "No wallet browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.";
     } else if (error instanceof UnsupportedChainIdError) {
+      /*todo update SwitchNetwork*/
       return (
         <SwitchNetwork
-          chainId={CHAIN_ID}
-          rpcUrl={CHAIN_INFO[CHAIN_ID].rpcUrl}
+          chainId={CHAIN_INFO[1].chainId}
+          rpcUrl={CHAIN_INFO[1].rpcUrl}
           text
         />
       );

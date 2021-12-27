@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Link, List, ListItem, Text } from "@chakra-ui/react";
-import { MAIN_PAGE } from "../../utils/constants";
+import { CHAIN_INFO } from "../../utils/constants";
 
 export default function Footer(props) {
   return (
@@ -29,7 +29,7 @@ export default function Footer(props) {
             mb={{ base: "20px", xl: "0px" }}
           >
             &copy; {1900 + new Date().getYear()}{" "}
-            <Link color="teal.400" href={MAIN_PAGE} isExternal>
+            <Link color="teal.400" href={CHAIN_INFO[1].mainPage} isExternal>
               Diabolo
             </Link>
           </Text>

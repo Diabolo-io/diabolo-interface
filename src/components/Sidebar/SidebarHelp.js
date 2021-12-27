@@ -3,7 +3,7 @@ import { Button, Flex, Link, Text } from "@chakra-ui/react";
 
 import SidebarHelpImage from "../../assets/img/SidebarHelpImage.png";
 
-import { DOCS_LINK } from "../../utils/constants";
+import { CHAIN_INFO } from "../../utils/constants";
 
 export function SidebarHelp(props) {
   // Pass the computed styles into the `__css` prop
@@ -26,7 +26,7 @@ export function SidebarHelp(props) {
       <Text fontSize="xs" color="white" mb="10px">
         Please check our docs
       </Text>
-      <Link w="100%" href={DOCS_LINK}>
+      <Link w="100%" href={CHAIN_INFO[1].docLink}>
         <Button
           fontSize="10px"
           fontWeight="bold"

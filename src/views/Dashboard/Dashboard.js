@@ -43,10 +43,10 @@ import {
 } from "react-icons/fa";
 import { useWeb3React } from "@web3-react/core";
 import { useENS } from "../../utils/ens";
-import { useKYC } from "../../utils/kyc";
+import { useKYC } from "../../utils/offchain";
 import { useVesting } from "../../utils/vesting";
 
-import { CHAIN_INFO, KYC_LINK } from "../../utils/constants";
+import { CHAIN_INFO } from "../../utils/constants";
 
 function Dashboard() {
   const { account, active, chainId } = useWeb3React();
@@ -216,7 +216,7 @@ function Dashboard() {
                   </Flex>
                 </Button>
               ) : (
-                <Link href={KYC_LINK} isExternal>
+                <Link href={CHAIN_INFO[chainId].kycLink} isExternal>
                   <Button p="0px" bg="transparent" _hover={{ bg: "none" }}>
                     <Flex
                       align="center"

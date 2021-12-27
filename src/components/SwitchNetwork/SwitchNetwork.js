@@ -1,5 +1,5 @@
 import { Button, Text } from "@chakra-ui/react";
-
+/*todo change button for switch button with all network*/
 function SwitchNetwork(props) {
   const { text, chainId, rpcUrl, ...rest } = props;
   if (window.ethereum) {

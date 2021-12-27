@@ -35,7 +35,7 @@ import { CHAIN_INFO } from "../../utils/constants";
 
 import { useWeb3React } from "@web3-react/core";
 import { useENS } from "../../utils/ens";
-import { useKYC } from "../../utils/kyc";
+import { useKYC } from "../../utils/offchain";
 import { useBalances } from "../../utils/balances";
 import { useEagerConnect } from "../../utils/wallet";
 

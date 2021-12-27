@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 
 export function useUpdater() {
   const { library, chainId } = useWeb3React();
-  const [blockNumber, setBlockNumber] = useState();
+  const [updater, setUpdater] = useState();
 
   useEffect(() => {
     if (library) {
@@ -12,27 +12,27 @@ export function useUpdater() {
         .getBlockNumber()
         .then((blockNumber) => {
           if (!stale) {
-            setBlockNumber(blockNumber);
+            setUpdater(blockNumber);
           }
         })
         .catch(() => {
           if (!stale) {
-            setBlockNumber(null);
+            setUpdater(null);
           }
         });
 
       const updateBlockNumber = (blockNumber) => {
-        setBlockNumber(blockNumber);
+        setUpdater(blockNumber);
       };
       library.on("block", updateBlockNumber);
 
       return () => {
         library.removeListener("block", updateBlockNumber);
         stale = true;
-        setBlockNumber(undefined);
+        setUpdater(undefined);
       };
     }
   }, [library, chainId]);
 
-  return blockNumber;
+  return updater;
 }
