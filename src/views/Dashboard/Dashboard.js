@@ -256,6 +256,10 @@ function Dashboard() {
             justifyContent="center"
             align="center"
           >
+            <Text fontSize="lg" color={textColor} fontWeight="bold">
+              You have not made any transaction
+              {/*todo tx history*/}
+            </Text>
           </CardHeader>
         </Card>
       </Flex>
