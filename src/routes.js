@@ -1,5 +1,6 @@
 import Home from "./views/Home/Home.js";
 import Dashboard from "./views/Dashboard/Dashboard.js";
+import Claim from "./views/Claim/Claim.js";
 import Connect from "./views/Connect/Connect.js";
 
 import { HomeIcon, PersonIcon } from "./components/Icons/Icons";
@@ -17,6 +18,13 @@ var dashRoutes = [
     name: "Dashboard",
     icon: <PersonIcon color="inherit" />,
     component: Dashboard,
+    layout: "/",
+  },
+  {
+    path: "claim",
+    name: "Claim",
+    icon: <PersonIcon color="inherit" />,
+    component: Claim,
     layout: "/",
   },
   {
