@@ -10,7 +10,6 @@ import {
   Icon,
   Text,
   Link,
-  Progress,
   SimpleGrid,
   Stat,
   StatLabel,
