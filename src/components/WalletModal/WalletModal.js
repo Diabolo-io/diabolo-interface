@@ -60,14 +60,7 @@ function WalletModal(props) {
     if (error instanceof NoEthereumProviderError) {
       return "No wallet browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.";
     } else if (error instanceof UnsupportedChainIdError) {
-      /*todo update SwitchNetwork*/
-      return (
-        <SwitchNetwork
-          chainId={CHAIN_INFO[1].chainId}
-          rpcUrl={CHAIN_INFO[1].rpcUrl}
-          text
-        />
-      );
+      return <SwitchNetwork mr="5px" text />;
     } else if (
       error instanceof UserRejectedRequestErrorInjected ||
       error instanceof UserRejectedRequestErrorWalletConnect
@@ -96,7 +89,7 @@ function WalletModal(props) {
           Chose your wallet provider
         </Text>
         {userError && (
-          <Alert status="error" mb="36px" borderRadius="15px">
+          <Alert status="error" mb="36px" borderRadius="15px" overflow>
             <AlertIcon />
             <AlertDescription color={titleColor}>{userError}</AlertDescription>
           </Alert>
