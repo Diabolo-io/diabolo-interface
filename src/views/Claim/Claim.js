@@ -25,6 +25,13 @@ import LineChart from "../../components/LineChart/LineChart";
 
 import ConnectCard from "../../components/ConnectCard/ConnectCard";
 import KycCard from "../../components/KycCard/KycCard";
+import SwitchNetworkCard from "../../components/SwitchNetworkCard/SwitchNetworkCard";
+/*import { AnimatedNumber } from "../../components/AnimatedNumber/AnimatedNumber";
+/*todo*/
+/*
+<AnimatedNumber
+  animateToNumber={parseFloat(coinBalance).toFixed(3)}
+/>*/
 
 // Custom icons
 import {
@@ -60,7 +67,7 @@ function Claim() {
   );
   const iconBoxInside = useColorModeValue("white", "white");
 
-/*todo recovery data on vesting*/
+  /*todo recovery data on vesting*/
   const chartOptions = {
     categories: [
       "Jan",
@@ -81,11 +88,11 @@ function Claim() {
 
   const chartData = [
     {
-      name: "Mobile apps",
+      name: "Test",
       data: [10, 20, 30, 40, 50, 60, 70, 0, 0],
     },
     {
-      name: "Websites",
+      name: "Test",
       data: [5, 10, 15, 20, 25, 30, 35, 40, 45],
     },
   ];
@@ -390,12 +397,14 @@ function Claim() {
             </Flex>
           ) : vesting === undefined ? (
             <Progress
+              mt="10%"
               borderRadius="10px"
               bg="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
               isIndeterminate
             />
           ) : vestingList === undefined ? (
             <Progress
+              mt="10%"
               borderRadius="10px"
               bg="linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
               isIndeterminate
@@ -434,7 +443,11 @@ function Claim() {
             xl: "5%",
           }}
         >
-        {/*todo bad network*/}
+          <SwitchNetworkCard
+            textColor={textColor}
+            functionality="Claim"
+            chainAvailable={[4]}
+          />
         </Flex>
       )}
     </Flex>
