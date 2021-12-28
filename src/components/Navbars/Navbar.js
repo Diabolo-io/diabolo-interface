@@ -93,7 +93,7 @@ export default function Navbar(props) {
         }}
         alignItems={{ xl: "center" }}
       >
-        <Box ms="auto" w={{ sm: "100%", md: "unset" }}>
+        <Box ms="auto" w={{ sm: "unset", md: "unset" }}>
           <NavbarLinks
             onOpen={props.onOpen}
             logoText={props.logoText}

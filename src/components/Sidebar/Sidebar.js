@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -457,7 +457,31 @@ export function SidebarResponsive(props) {
             _focus={{ boxShadow: "none" }}
             _hover={{ boxShadow: "none" }}
           />
-          <DrawerBody maxW="250px" px="1rem">
+          <DrawerBody
+            maxW="250px"
+            px="1rem"
+            sx={{
+              "&::-webkit-scrollbar": {
+                "width": "15px",
+                "border-radius": "25px",
+              },
+              "&::-webkit-scrollbar-track": {
+                "box-shadow": "inset 0 0 15px 15px #141414",
+                "border": "solid 6px transparent",
+                "border-radius": "25px",
+              },
+
+              "&::-webkit-scrollbar-thumb": {
+                "box-shadow": "inset 0 0 15px 15px #434343",
+                "border": "solid 6px transparent",
+                "border-radius": "25px",
+              },
+
+              "&::-webkit-scrollbar-button": {
+                "display": "none",
+              },
+            }}
+          >
             <Box maxW="100%" h="100vh">
               <Box>{brand}</Box>
               <Stack direction="column" mb="40px">

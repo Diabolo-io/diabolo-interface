@@ -120,10 +120,6 @@ export default function UserNavbar(props) {
             bgPosition="top left, top center, top right, center right, bottom right, bottom center, bottom left, center left"
             px="30px"
             borderRadius="0px"
-            display={{
-              sm: "none",
-              lg: "flex",
-            }}
           >
             Diabolo
           </Button>

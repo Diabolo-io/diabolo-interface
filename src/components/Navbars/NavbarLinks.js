@@ -19,23 +19,16 @@ import {
 // Custom Icons
 import {
   ProfileIcon,
-  SupportIcon,
   ExitIcon,
 } from "../../components/Icons/Icons";
 
 // Custom Components
 import { SidebarResponsive } from "../../components/Sidebar/Sidebar";
-/*import { AnimatedNumber } from "../../components/AnimatedNumber/AnimatedNumber";
-
-<AnimatedNumber
-  animateToNumber={parseFloat(coinBalance).toFixed(3)}
-/>*/
 
 import { CHAIN_INFO } from "../../utils/constants";
 
 import { useWeb3React } from "@web3-react/core";
 import { useENS } from "../../utils/ens";
-import { useKYC } from "../../utils/offchain";
 import { useBalances } from "../../utils/balances";
 import { useEagerConnect } from "../../utils/wallet";
 
@@ -52,9 +45,6 @@ export default function HeaderLinks(props) {
 
   //fetch ens name if exist
   const ens = useENS();
-
-  //fetch kyc status
-  const kyc = useKYC();
 
   // Chakra Color Mode
   let navbarIcon = useColorModeValue("gray.400", "gray.200");
@@ -84,7 +74,7 @@ export default function HeaderLinks(props) {
                     </Text>
                   </Flex>
                 </MenuButton>
-                {/*<MenuList borderRadius="20px" alignItems="center">
+                <MenuList borderRadius="20px" alignItems="center">
                   <Flex flexDirection="column">
                     {Object.keys(CHAIN_INFO).map((id) => {
                       return (
@@ -130,16 +120,16 @@ export default function HeaderLinks(props) {
                       );
                     })}
                   </Flex>
-                </MenuList>*/}
+                </MenuList>
               </Menu>
             </Button>
-            <Button>
+            <Button display={{ sm: "none", md: "block", lg: "block" }}>
               <Flex flexDirection="row" mt="3px">
                 {parseFloat(coinBalance).toFixed(3)}{" "}
                 {CHAIN_INFO[chainId].nativeCoin.symbol}
               </Flex>
             </Button>
-            <Button>
+            <Button display={{ sm: "none", md: "block", lg: "block" }}>
               <Flex flexDirection="row" mt="3px">
                 {parseFloat(tokenBalance).toFixed(1)}{" "}
                 {CHAIN_INFO[chainId].mainToken.symbol}
@@ -198,13 +188,6 @@ export default function HeaderLinks(props) {
             }
           >
             <Text mt="3px">Connect</Text>
-          </Button>
-        </NavLink>
-      )}
-      {kyc == false && (
-        <NavLink to="/dashboard">
-          <Button size="sm" colorScheme="red" color="white" variant="solid">
-            <SupportIcon />
           </Button>
         </NavLink>
       )}
