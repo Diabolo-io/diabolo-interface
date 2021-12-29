@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
+import { CHAIN_INFO } from "./constants";
 
 export function useUpdater() {
   const { library, chainId } = useWeb3React();
@@ -34,5 +35,26 @@ export function useUpdater() {
     }
   }, [library, chainId]);
 
+  return updater;
+}
+
+export function useOffChainUpdater() {
+  const { chainId } = useWeb3React();
+  const [updater, setUpdater] = useState(0);
+  const [time, setTime] = useState(50000);
+
+  useEffect(() => {
+    if(chainId && CHAIN_INFO[chainId].offchainInterval){
+      setTime(CHAIN_INFO[chainId].offchainInterval);
+    } else {
+      setTime(CHAIN_INFO[1].offchainInterval);
+    }
+  }, [chainId]);
+
+  useEffect(() => {
+    setInterval(() => {
+      setUpdater((updater) => updater + 1);
+    }, time);
+  }, []);
   return updater;
 }
