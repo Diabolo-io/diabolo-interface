@@ -25,6 +25,7 @@ import LineChart from "../../components/LineChart/LineChart";
 
 import ConnectCard from "../../components/ConnectCard/ConnectCard";
 import KycCard from "../../components/KycCard/KycCard";
+import UnavailableCard from "../../components/UnavailableCard/UnavailableCard";
 import SwitchNetworkCard from "../../components/SwitchNetworkCard/SwitchNetworkCard";
 /*import { AnimatedNumber } from "../../components/AnimatedNumber/AnimatedNumber";
 /*todo*/
@@ -43,6 +44,7 @@ import {
 import { useWeb3React } from "@web3-react/core";
 import { useVesting } from "../../utils/vesting";
 import { useKYC, useVestingList } from "../../utils/offchain";
+import { fromWeiWithDecimals } from "../../utils/decimals";
 
 import { CHAIN_INFO } from "../../utils/constants";
 
@@ -120,7 +122,7 @@ function Claim() {
                           {parseFloat(
                             vesting["total"].totalLockedAmounts
                           ).toFixed(3)}{" "}
-                          DCASH
+                          {vesting["total"].symbol}
                         </Text>
                       </Text>
                     </Flex>
@@ -155,7 +157,7 @@ function Claim() {
                               {parseFloat(
                                 vesting["total"].totalLockedAmounts
                               ).toFixed(3)}{" "}
-                              DCASH
+                              {vesting["total"].symbol}
                             </StatNumber>
                             <StatHelpText
                               alignSelf="flex-end"
@@ -213,7 +215,7 @@ function Claim() {
                               {parseFloat(
                                 vesting["total"].totalClaimedAmounts
                               ).toFixed(3)}{" "}
-                              DCASH
+                              {vesting["total"].symbol}
                             </StatNumber>
                             <StatHelpText
                               alignSelf="flex-end"
@@ -269,9 +271,9 @@ function Claim() {
                           <Flex>
                             <StatNumber fontSize="lg" color={textColor}>
                               {parseFloat(
-                                vesting["total"].totalClaimableBalance
+                                vesting["total"].totalClaimableAmounts
                               ).toFixed(3)}{" "}
-                              DCASH
+                              {vesting["total"].symbol}
                             </StatNumber>
                             <StatHelpText
                               alignSelf="flex-end"
@@ -285,7 +287,7 @@ function Claim() {
                               ≈
                               {parseFloat(
                                 (parseFloat(
-                                  vesting["total"].totalClaimableBalance
+                                  vesting["total"].totalClaimableAmounts
                                 ).toFixed(3) *
                                   100) /
                                   parseFloat(
@@ -319,7 +321,7 @@ function Claim() {
                 {Object.keys(vesting).map((index) => {
                   if (vesting[index].name !== "total") {
                     let claimable = parseFloat(
-                      vesting[index].claimableBalance
+                      vesting[index].claimableAmounts
                     ).toFixed(18);
                     let claimed = parseFloat(
                       vesting[index].claimedAmounts
@@ -383,7 +385,7 @@ function Claim() {
                       </StatLabel>
                       <Flex>
                         <StatNumber fontSize="lg" color={textColor}>
-                          {vestingList.amount} DCASH
+                          {vestingList.amount} {vestingList.symbol}
                         </StatNumber>
                       </Flex>
                     </Stat>
@@ -394,6 +396,47 @@ function Claim() {
                 </CardBody>
               </Card>
               <KycCard textColor={textColor} functionality="Claim" />
+            </Flex>
+          ) : vestingList && kyc && !vesting ? (
+            <Flex
+              justifyContent="center"
+              align="center"
+              flexDirection="column"
+              mt={{
+                md: "5%",
+                xl: "5%",
+              }}
+            >
+              <Card h="95px" w="300px" mb="25px">
+                <CardBody>
+                  <Flex
+                    flexDirection="row"
+                    align="center"
+                    justify="center"
+                    w="100%"
+                  >
+                    <Stat me="auto">
+                      <StatLabel
+                        fontSize="sm"
+                        color="gray.400"
+                        fontWeight="bold"
+                        pb=".1rem"
+                      >
+                        Investement Overview
+                      </StatLabel>
+                      <Flex>
+                        <StatNumber fontSize="lg" color={textColor}>
+                          {vestingList.amount} {vestingList.symbol}
+                        </StatNumber>
+                      </Flex>
+                    </Stat>
+                    <IconBox as="box" h={"45px"} w={"45px"} bg={iconTeal}>
+                      <WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />
+                    </IconBox>
+                  </Flex>
+                </CardBody>
+              </Card>
+              <UnavailableCard textColor={textColor} functionality="Claim" />
             </Flex>
           ) : vesting === undefined ? (
             <Progress
