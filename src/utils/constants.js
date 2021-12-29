@@ -43,7 +43,6 @@ export const CHAIN_INFO = {
       abi: tokenAbi,
     },
     nativeCoin: { name: "ETH", symbol: "ETH", decimals: 18 },
-    vestingList: VESTING_LIST,
     kycList: KYC_LIST,
     notifsList: NOTIFS_LIST,
     kycLink: KYC_LINK,
@@ -72,18 +71,13 @@ export const CHAIN_INFO = {
     kycLink: KYC_LINK,
     vesting: [
       {
-        name: "Whitelist",
-        address: "0x184baeF076e5CA84084A5b9CC3E784a8C8e5b3fD",
+        name: "rinkList",
+        address: "0xfe072B57251B61cbA0De6467Ce964Ff442f8997b",
         abi: vestingAbi,
       },
       {
-        name: "Seed",
-        address: "0xbB382265fb76A34D70626706f739a619A5fF1963",
-        abi: vestingAbi,
-      },
-      {
-        name: "Team",
-        address: "0xD4C6F2D3c6Dd5eD2e63d9576171FF8C84C5EDe13",
+        name: "rinkList2",
+        address: "0xD401B40aa70498A64d141a0DA338BE0f4430Ae68",
         abi: vestingAbi,
       },
     ],
@@ -106,7 +100,6 @@ export const CHAIN_INFO = {
       abi: tokenAbi,
     },
     nativeCoin: { name: "MATIC", symbol: "MATIC", decimals: 18 },
-    vestingList: VESTING_LIST,
     kycList: KYC_LIST,
     notifsList: NOTIFS_LIST,
     kycLink: KYC_LINK,

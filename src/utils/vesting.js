@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 import { useWeb3React } from "@web3-react/core";
 import { useUpdater } from "./updater";
-import { fromWeiWithDecimals } from "./decimals";
 
 import { ethers } from "ethers";
 
@@ -20,16 +19,19 @@ export function useVesting() {
     if (library && chainId && account && CHAIN_INFO[chainId].vesting) {
       let vestingInfos = {};
       let contract,
+        claimableAmounts,
         claimedAmounts,
-        claimableBalance,
         lockedAmounts,
         unlockBegin,
         unlockCliff,
         unlockEnd,
-        token;
+        name,
+        symbol,
+        token,
+        decimal;
 
-      let totalClaimedAmounts = 0,
-        totalClaimableBalance = 0,
+      let totalClaimedAmounts,
+        totalClaimableAmounts,
         totalLockedAmounts = 0;
 
       for (const lockup in CHAIN_INFO[chainId].vesting) {
@@ -39,67 +41,53 @@ export function useVesting() {
           library
         );
 
-        claimedAmounts = fromWeiWithDecimals(
-          await contract.claimedAmounts(account),
-          18
-        );
+        if (await contract.lockedAddressExist(account)) {
+          claimedAmounts = await contract.claimedAmounts(account);
 
-        totalClaimedAmounts = totalClaimedAmounts + claimedAmounts;
+          totalClaimedAmounts += claimedAmounts;
 
-        claimableBalance = fromWeiWithDecimals(
-          await contract.claimableBalance(account),
-          18
-        );
+          claimableAmounts = await contract.claimableAmounts(account);
 
-        totalClaimableBalance = totalClaimableBalance + claimableBalance;
+          totalClaimableAmounts += claimableAmounts;
 
-        lockedAmounts = fromWeiWithDecimals(
-          await contract.lockedAmounts(account),
-          18
-        );
+          lockedAmounts = await contract.lockedAmounts(account);
 
-        totalLockedAmounts = totalLockedAmounts + lockedAmounts;
+          totalLockedAmounts += lockedAmounts;
 
-        unlockBegin = await contract.unlockBegin();
+          unlockBegin = await contract.unlockBegin();
 
-        unlockCliff = await contract.unlockCliff();
+          unlockCliff = await contract.unlockCliff();
 
-        unlockEnd = await contract.unlockEnd();
+          unlockEnd = await contract.unlockEnd();
 
-        token = await contract.token();
+          name = await contract.name();
 
-        if (fromWeiWithDecimals(lockedAmounts, 18) != 0) {
+          token = await contract.token();
+
+          /*  decimal = await erc20.;
+
+          symbol = await erc20. */
+
           vestingInfos[lockup] = {
             claimedAmounts: claimedAmounts,
-            claimableBalance: claimableBalance,
+            claimableAmounts: claimableAmounts,
             lockedAmounts: lockedAmounts,
             unlockBegin: unlockBegin,
             unlockCliff: unlockCliff,
             unlockEnd: unlockEnd,
-            token: token,
             address: CHAIN_INFO[chainId].vesting[lockup].address,
-            name: CHAIN_INFO[chainId].vesting[lockup].name,
+            name: name,
+            symbol: symbol,
           };
-        }
-
-        if (
-          totalClaimedAmounts ||
-          totalClaimableBalance ||
-          totalLockedAmounts !== 0
-        ) {
           vestingInfos["total"] = {
-            name: "total",
             totalClaimedAmounts: totalClaimedAmounts,
-            totalClaimableBalance: totalClaimableBalance,
+            totalClaimableAmounts: totalClaimableAmounts,
             totalLockedAmounts: totalLockedAmounts,
           };
+          setVesting(vestingInfos);
+        } else {
+          setVesting(false);
         }
-      }
-
-      if (Object.keys(vestingInfos).length) {
-        setVesting(vestingInfos);
-      } else {
-        setVesting(false);
       }
     } else {
       setVesting(false);
