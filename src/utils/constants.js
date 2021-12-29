@@ -10,6 +10,7 @@ const KYC_LINK = process.env.REACT_APP_KYC_LINK;
 const KYC_LIST = process.env.REACT_APP_KYC_LIST;
 const NOTIFS_LIST = process.env.REACT_APP_NOTIFS_LIST;
 const VESTING_LIST = process.env.REACT_APP_VESTING_LIST;
+const OFF_CHAIN_INTERVAL = process.env.REACT_APP_OFF_CHAIN_INTERVAL;
 
 export const SupportedChainId = {
   MAINNET: 1,
@@ -31,6 +32,7 @@ export const CHAIN_INFO = {
     label: "Ethereum",
     logo: AssetsLogo.Ethereum,
     rpcUrl: "none",
+    offchainInterval: OFF_CHAIN_INTERVAL,
     docLink: DOCS_LINK,
     mainPage: MAIN_PAGE,
     mainToken: {
@@ -53,6 +55,7 @@ export const CHAIN_INFO = {
     label: "Rinkeby",
     logo: AssetsLogo.Rinkeby,
     rpcUrl: "none",
+    offchainInterval: OFF_CHAIN_INTERVAL,
     docLink: DOCS_LINK,
     mainPage: MAIN_PAGE,
     mainToken: {
@@ -92,6 +95,7 @@ export const CHAIN_INFO = {
     label: "Polygon",
     logo: AssetsLogo.Polygon,
     rpcUrl: "https://rpc-mainnet.maticvigil.com",
+    offchainInterval: OFF_CHAIN_INTERVAL,
     docLink: DOCS_LINK,
     mainPage: MAIN_PAGE,
     mainToken: {

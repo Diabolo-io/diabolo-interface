@@ -1,65 +1,79 @@
 import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
-import useSWR from "swr";
 import { CHAIN_INFO } from "./constants";
 
+import { useOffChainUpdater } from "./updater";
+
+export async function fetcher(...args) {
+  const res = await fetch(...args);
+  return res.json();
+}
+
 export function useVestingList() {
-  const { account } = useWeb3React();
-  const [vestingList, setVestingList] = useState(false);
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { account, chainId } = useWeb3React();
+  const updater = useOffChainUpdater();
+  const [vestingList, setVestingList] = useState(undefined);
 
-  const { data } = useSWR(CHAIN_INFO[1].vestingList, fetcher);
-
-  useEffect(() => {
-    if (data && account) {
-      if (data[account]) {
+  useEffect(async () => {
+    if (account && chainId && CHAIN_INFO[chainId].vestingList) {
+      let data = await fetcher(CHAIN_INFO[chainId].vestingList);
+      if (data && data[account]) {
         setVestingList(data[account]);
       } else {
         setVestingList(false);
       }
     } else {
-      setVestingList(undefined);
+      setVestingList(false);
     }
-  }, [account, data]); // catch vesting status if account or whitelist change
+  }, [account, chainId, updater]); // catch vesting status if account or whitelist change
 
   return vestingList;
 }
 
 export function useKYC() {
-  const { account } = useWeb3React();
-  const [kyc, setKyc] = useState(false);
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { account, chainId } = useWeb3React();
+  const updater = useOffChainUpdater();
+  const [kyc, setKyc] = useState(undefined);
 
-  const { data } = useSWR(CHAIN_INFO[1].kycList, fetcher);
-
-  useEffect(() => {
-    if (data && account) {
-      if (data[account]) {
+  useEffect(async () => {
+    if (account && chainId && CHAIN_INFO[chainId].kycList) {
+      let data = await fetcher(CHAIN_INFO[chainId].kycList);
+      if (data && data[account]) {
         setKyc(true);
       } else {
         setKyc(false);
       }
     } else {
-      setKyc(undefined);
+      setKyc(false);
     }
-  }, [account, data]); // catch kyc status if account or whitelist change
+  }, [account, chainId, updater]); // catch kyc status if account or whitelist change
 
   return kyc;
 }
 
 export function useNotifs() {
-  const [notifs, setNotifs] = useState();
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { chainId } = useWeb3React();
+  const updater = useOffChainUpdater();
+  const [notifs, setNotifs] = useState(undefined);
 
-  const { data, error } = useSWR(CHAIN_INFO[1].notifsList, fetcher);
-
-  useEffect(() => {
-    if (data) {
-      setNotifs(data);
+  useEffect(async () => {
+    if (chainId && CHAIN_INFO[chainId].notifsList) {
+      let data = await fetcher(CHAIN_INFO[chainId].notifsList);
+      if (data) {
+        setNotifs(data);
+      } else {
+        setNotifs(undefined);
+      }
     } else {
-      setNotifs(undefined);
+      let data = await fetcher(CHAIN_INFO[1].notifsList);
+
+      if (data) {
+        setNotifs(data);
+      } else {
+        setNotifs(undefined);
+      }
     }
-  }, [data]); // fetch notifs
+  }, [chainId, updater]); // fetch notifs
 
   return notifs;
 }
