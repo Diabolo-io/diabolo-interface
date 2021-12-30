@@ -1,4 +1,5 @@
 import tokenAbi from "./abi/token";
+import erc20Abi from "./abi/erc20";
 import vestingAbi from "./abi/vesting";
 /*todo update abi*/
 import AssetsLogo from "./assets/token";
@@ -71,14 +72,14 @@ export const CHAIN_INFO = {
     kycLink: KYC_LINK,
     vesting: [
       {
-        name: "rinkList",
         address: "0xfe072B57251B61cbA0De6467Ce964Ff442f8997b",
         abi: vestingAbi,
+        tokenAbi: erc20Abi,
       },
       {
-        name: "rinkList2",
         address: "0xD401B40aa70498A64d141a0DA338BE0f4430Ae68",
         abi: vestingAbi,
+        tokenAbi: erc20Abi,
       },
     ],
   },
