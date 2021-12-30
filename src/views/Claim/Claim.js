@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 // Chakra imports
 import {
   Box,
+  Button,
   Flex,
   Grid,
   Icon,
@@ -27,24 +28,22 @@ import ConnectCard from "../../components/ConnectCard/ConnectCard";
 import KycCard from "../../components/KycCard/KycCard";
 import UnavailableCard from "../../components/UnavailableCard/UnavailableCard";
 import SwitchNetworkCard from "../../components/SwitchNetworkCard/SwitchNetworkCard";
-/*import { AnimatedNumber } from "../../components/AnimatedNumber/AnimatedNumber";
-/*todo*/
-/*
-<AnimatedNumber
-  animateToNumber={parseFloat(coinBalance).toFixed(3)}
-/>*/
-
+import TimelineRow from "../../components/TimelineRow/TimelineRow";
+import { AnimatedNumber } from "../../components/AnimatedNumber/AnimatedNumber";
+/*todo number*/
 // Custom icons
 import {
   RocketIcon,
   WalletIcon,
   ClockIcon,
+  StatsIcon,
 } from "../../components/Icons/Icons.js";
+
+import { FaAngleDown, FaAngleDoubleDown, FaWallet } from "react-icons/fa";
 
 import { useWeb3React } from "@web3-react/core";
 import { useVesting } from "../../utils/vesting";
 import { useKYC, useVestingList } from "../../utils/offchain";
-import { fromWeiWithDecimals } from "../../utils/decimals";
 
 import { CHAIN_INFO } from "../../utils/constants";
 
@@ -69,36 +68,6 @@ function Claim() {
   );
   const iconBoxInside = useColorModeValue("white", "white");
 
-  /*todo recovery data on vesting*/
-  const chartOptions = {
-    categories: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    colors: ["#7f3bd5", "#fe1ae7"],
-  };
-
-  const chartData = [
-    {
-      name: "Test",
-      data: [10, 20, 30, 40, 50, 60, 70, 0, 0],
-    },
-    {
-      name: "Test",
-      data: [5, 10, 15, 20, 25, 30, 35, 40, 45],
-    },
-  ];
-
   return active ? (
     <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }} my="26px">
       {CHAIN_INFO[chainId].vesting ? (
@@ -121,7 +90,7 @@ function Claim() {
                         <Text as="span" color="green.400" fontWeight="bold">
                           {parseFloat(
                             vesting["total"].totalLockedAmounts
-                          ).toFixed(3)}{" "}
+                          ).toFixed(2)}{" "}
                           {vesting["total"].symbol}
                         </Text>
                       </Text>
@@ -129,8 +98,8 @@ function Claim() {
                   </CardHeader>
                   <Box w="100%" h={{ sm: "300px" }} ps="8px">
                     <LineChart
-                      chartOptions={chartOptions}
-                      chartData={chartData}
+                      chartOptions={vesting["total"].chartOptions}
+                      chartData={vesting["total"].chartData}
                     />
                   </Box>
                 </Card>
@@ -156,7 +125,7 @@ function Claim() {
                             <StatNumber fontSize="lg" color={textColor}>
                               {parseFloat(
                                 vesting["total"].totalLockedAmounts
-                              ).toFixed(3)}{" "}
+                              ).toFixed(2)}{" "}
                               {vesting["total"].symbol}
                             </StatNumber>
                             <StatHelpText
@@ -173,11 +142,11 @@ function Claim() {
                                 100 -
                                   (parseFloat(
                                     vesting["total"].totalClaimedAmounts
-                                  ).toFixed(3) *
+                                  ).toFixed(2) *
                                     100) /
                                     parseFloat(
                                       vesting["total"].totalLockedAmounts
-                                    ).toFixed(3)
+                                    ).toFixed(2)
                               ).toFixed(0)}
                               %
                             </StatHelpText>
@@ -214,7 +183,7 @@ function Claim() {
                             <StatNumber fontSize="lg" color={textColor}>
                               {parseFloat(
                                 vesting["total"].totalClaimedAmounts
-                              ).toFixed(3)}{" "}
+                              ).toFixed(2)}{" "}
                               {vesting["total"].symbol}
                             </StatNumber>
                             <StatHelpText
@@ -230,11 +199,11 @@ function Claim() {
                               {parseFloat(
                                 (parseFloat(
                                   vesting["total"].totalClaimedAmounts
-                                ).toFixed(3) *
+                                ).toFixed(2) *
                                   100) /
                                   parseFloat(
                                     vesting["total"].totalLockedAmounts
-                                  ).toFixed(3)
+                                  ).toFixed(2)
                               ).toFixed(0)}
                               %
                             </StatHelpText>
@@ -272,7 +241,7 @@ function Claim() {
                             <StatNumber fontSize="lg" color={textColor}>
                               {parseFloat(
                                 vesting["total"].totalClaimableAmounts
-                              ).toFixed(3)}{" "}
+                              ).toFixed(2)}{" "}
                               {vesting["total"].symbol}
                             </StatNumber>
                             <StatHelpText
@@ -288,11 +257,11 @@ function Claim() {
                               {parseFloat(
                                 (parseFloat(
                                   vesting["total"].totalClaimableAmounts
-                                ).toFixed(3) *
+                                ).toFixed(2) *
                                   100) /
                                   parseFloat(
                                     vesting["total"].totalLockedAmounts
-                                  ).toFixed(3)
+                                  ).toFixed(2)
                               ).toFixed(0)}
                               %
                             </StatHelpText>
@@ -313,8 +282,8 @@ function Claim() {
               <Grid
                 templateColumns={{
                   sm: "1fr",
-                  md: "repeat(" + (Object.keys(vesting).length - 2) + ", 1fr)",
-                  xl: "repeat(" + (Object.keys(vesting).length - 1) + ", 1fr)",
+                  md: "1fr",
+                  xl: "1fr 1fr",
                 }}
                 gap="22px"
               >
@@ -322,14 +291,47 @@ function Claim() {
                   if (vesting[index].name !== "total") {
                     let claimable = parseFloat(
                       vesting[index].claimableAmounts
-                    ).toFixed(18);
+                    ).toFixed(2);
                     let claimed = parseFloat(
                       vesting[index].claimedAmounts
-                    ).toFixed(18);
+                    ).toFixed(2);
                     let locked = parseFloat(
                       vesting[index].lockedAmounts
-                    ).toFixed(18);
+                    ).toFixed(2);
 
+                    let unlockbegin = new Date(
+                      vesting[index].unlockBegin * 1000
+                    ).toLocaleString("en-EN", {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      second: "numeric",
+                    });
+                    let unlockcliff = new Date(
+                      vesting[index].unlockCliff * 1000
+                    ).toLocaleString("en-EN", {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      second: "numeric",
+                    });
+                    let unlockend = new Date(
+                      vesting[index].unlockEnd * 1000
+                    ).toLocaleString("en-EN", {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      second: "numeric",
+                    });
                     return (
                       <Card p="16px">
                         <CardHeader p="12px 5px" mb="12px">
@@ -342,12 +344,271 @@ function Claim() {
                           </Text>
                         </CardHeader>
                         <CardBody px="5px">
-                          <Flex direction="column">
-                            <Text color={textColor}>Claimed : {claimed}</Text>
-                            <Text color={textColor}>
-                              Claimable : {claimable}
-                            </Text>
-                            <Text color={textColor}>Locked : {locked}</Text>
+                          <Flex direction="column" alignItems="center" w="100%">
+                            <Flex
+                              direction="row"
+                              alignItems="center"
+                              align="center"
+                              justify="center"
+                              w="100%"
+                            >
+                              <Card>
+                                <CardBody>
+                                  <Flex direction="column">
+                                    <TimelineRow
+                                      logo={FaAngleDown}
+                                      title="Unlock begins"
+                                      date={unlockbegin}
+                                      color={vesting[index].color}
+                                      index={0}
+                                      arrLength={3}
+                                    />
+                                    <TimelineRow
+                                      logo={FaAngleDoubleDown}
+                                      title="First unlock"
+                                      date={unlockcliff}
+                                      color={vesting[index].color}
+                                      index={1}
+                                      arrLength={3}
+                                    />
+                                    <TimelineRow
+                                      logo={FaWallet}
+                                      title="Unlock end"
+                                      date={unlockend}
+                                      color={vesting[index].color}
+                                      index={2}
+                                      arrLength={3}
+                                    />
+                                  </Flex>
+                                </CardBody>
+                              </Card>
+                              <Card
+                                mt="-45px"
+                                h="200px"
+                                w="80%"
+                                boxShadow="#FFF 0 0px 2px, #c800ff 0 0px 10px, #ff00ee 0 0px 20px"
+                              >
+                                <CardBody>
+                                  <Flex
+                                    flexDirection="column"
+                                    align="center"
+                                    justify="center"
+                                    w="100%"
+                                  >
+                                    <Flex
+                                      flexDirection="row"
+                                      align="center"
+                                      justify="center"
+                                      w="100%"
+                                      mb="20px"
+                                    >
+                                      <Stat me="auto">
+                                        <StatLabel
+                                          fontSize="sm"
+                                          color="gray.400"
+                                          fontWeight="bold"
+                                          pb=".1rem"
+                                        >
+                                          Claimable
+                                        </StatLabel>
+                                        <Flex>
+                                          <StatNumber
+                                            fontSize="lg"
+                                            color={textColor}
+                                          >
+                                            <Flex flexDirection="column">
+                                              {/*<AnimatedNumber
+                                              animateToNumber={parseFloat(
+                                                vesting[index]
+                                                  .claimableAmounts
+                                              ).toFixed(10)}
+                                            />*/}
+                                              <Text>
+                                                {parseFloat(
+                                                  vesting[index]
+                                                    .claimableAmounts
+                                                ).toFixed(10)}
+                                              </Text>
+                                            </Flex>
+                                          </StatNumber>
+                                        </Flex>
+                                      </Stat>
+                                      <IconBox
+                                        as="box"
+                                        h={"45px"}
+                                        w={"45px"}
+                                        bg={iconTeal}
+                                      >
+                                        <WalletIcon
+                                          h={"24px"}
+                                          w={"24px"}
+                                          color={iconBoxInside}
+                                        />
+                                      </IconBox>
+                                    </Flex>
+                                    <Button
+                                      mt="20px"
+                                      fontSize="xs"
+                                      variant="no-hover"
+                                      px="75px"
+                                      bg="linear-gradient(73.05deg, #fe1ae7 0%, #7f3bd5 100%)"
+                                      borderRadius="11px"
+                                      _hover={{
+                                        bg:
+                                          "radial-gradient( circle at 100% 100%, transparent 9px, #7f3bd4 9px, #7f3bd4 11px, transparent 11px ), linear-gradient(to right, #7f3bd4, #fe1ae7), radial-gradient( circle at 0% 100%, transparent 9px, #fe1ae7 9px, #fe1ae7 11px, transparent 11px ), linear-gradient(to bottom, #bf31ff, #bf31ff), radial-gradient( circle at 0% 0%, transparent 9px, #fe1ae7 9px, #fe1ae7 11px, transparent 11px ), linear-gradient(to left, #fe1ae7, #7f3bd4), radial-gradient( circle at 100% 0%, transparent 9px, #7f3bd4 9px, #7f3bd4 11px, transparent 11px ), linear-gradient(to top, #7f3bd4, #7f3bd4)",
+                                        bgSize:
+                                          "11px 11px, calc(100% - 22px) 2px, 11px 11px, 2px calc(100% - 22px)",
+                                        bgRepeat: "no-repeat",
+                                        bgPosition:
+                                          "top left, top center, top right, center right, bottom right, bottom center, bottom left, center left",
+                                        borderRadius: "0px",
+                                      }}
+                                    >
+                                      Claim
+                                    </Button>
+                                  </Flex>
+                                </CardBody>
+                              </Card>
+                            </Flex>
+                            <SimpleGrid
+                              gap={{ sm: "12px" }}
+                              columns={4}
+                              w="100%"
+                              p="5px"
+                            >
+                              <Flex direction="column">
+                                <Flex alignItems="center">
+                                  <IconBox
+                                    as="box"
+                                    h={"30px"}
+                                    w={"30px"}
+                                    bg={vesting[index].color}
+                                    me="6px"
+                                  >
+                                    <ClockIcon
+                                      h={"15px"}
+                                      w={"15px"}
+                                      color={iconBoxInside}
+                                    />
+                                  </IconBox>
+                                  <Text
+                                    fontSize="sm"
+                                    color="gray.400"
+                                    fontWeight="semibold"
+                                  >
+                                    Locked
+                                  </Text>
+                                </Flex>
+                                <Text
+                                  fontSize="lg"
+                                  color={textColor}
+                                  fontWeight="bold"
+                                  mb="6px"
+                                  my="6px"
+                                >
+                                  {locked}
+                                </Text>
+                              </Flex>
+                              <Flex direction="column">
+                                <Flex alignItems="center">
+                                  <IconBox
+                                    as="box"
+                                    h={"30px"}
+                                    w={"30px"}
+                                    bg={vesting[index].color}
+                                    me="6px"
+                                  >
+                                    <RocketIcon
+                                      h={"15px"}
+                                      w={"15px"}
+                                      color={iconBoxInside}
+                                    />
+                                  </IconBox>
+                                  <Text
+                                    fontSize="sm"
+                                    color="gray.400"
+                                    fontWeight="semibold"
+                                  >
+                                    Claimed
+                                  </Text>
+                                </Flex>
+                                <Text
+                                  fontSize="lg"
+                                  color={textColor}
+                                  fontWeight="bold"
+                                  mb="6px"
+                                  my="6px"
+                                >
+                                  {claimed}
+                                </Text>
+                              </Flex>
+                              <Flex direction="column">
+                                <Flex alignItems="center">
+                                  <IconBox
+                                    as="box"
+                                    h={"30px"}
+                                    w={"30px"}
+                                    bg={vesting[index].color}
+                                    me="6px"
+                                  >
+                                    <WalletIcon
+                                      h={"15px"}
+                                      w={"15px"}
+                                      color={iconBoxInside}
+                                    />
+                                  </IconBox>
+                                  <Text
+                                    fontSize="sm"
+                                    color="gray.400"
+                                    fontWeight="semibold"
+                                  >
+                                    Claimable
+                                  </Text>
+                                </Flex>
+                                <Text
+                                  fontSize="lg"
+                                  color={textColor}
+                                  fontWeight="bold"
+                                  mb="6px"
+                                  my="6px"
+                                >
+                                  {claimable}
+                                </Text>
+                              </Flex>
+                              <Flex direction="column">
+                                <Flex alignItems="center">
+                                  <IconBox
+                                    as="box"
+                                    h={"30px"}
+                                    w={"30px"}
+                                    bg={vesting[index].color}
+                                    me="6px"
+                                  >
+                                    <StatsIcon
+                                      h={"15px"}
+                                      w={"15px"}
+                                      color={iconBoxInside}
+                                    />
+                                  </IconBox>
+                                  <Text
+                                    fontSize="sm"
+                                    color="gray.400"
+                                    fontWeight="semibold"
+                                  >
+                                    Token
+                                  </Text>
+                                </Flex>
+                                <Text
+                                  fontSize="lg"
+                                  color={textColor}
+                                  fontWeight="bold"
+                                  mb="6px"
+                                  my="6px"
+                                >
+                                  {vesting[index].symbol}
+                                </Text>
+                              </Flex>
+                            </SimpleGrid>
                           </Flex>
                         </CardBody>
                       </Card>
@@ -397,7 +658,7 @@ function Claim() {
               </Card>
               <KycCard textColor={textColor} functionality="Claim" />
             </Flex>
-          ) : vestingList && kyc && !vesting ? (
+          ) : vestingList && kyc && vesting == false ? (
             <Flex
               justifyContent="center"
               align="center"
