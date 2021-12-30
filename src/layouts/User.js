@@ -86,10 +86,7 @@ export default function Pages() {
     <ChakraProvider theme={theme} resetCss={false} w="100%">
       <Box ref={navRef} w="100%">
         <Portal containerRef={navRef}>
-          <UserNavbar
-            secondary={getActiveNavbar(routes)}
-            logoText="DIABOLO"
-          />
+          <UserNavbar secondary={getActiveNavbar(routes)} logoText="DIABOLO" />
         </Portal>
         <Box w="100%">
           <Box ref={wrapper} w="100%">
