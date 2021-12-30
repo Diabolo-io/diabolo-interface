@@ -11,15 +11,18 @@ import {
   Progress,
   Image,
   Text,
+  Button,
   Alert,
   AlertIcon,
   AlertDescription,
+  useToast,
 } from "@chakra-ui/react";
 
 import Card from "../Card/Card";
 import CardBody from "../Card/CardBody";
 import IconBox from "../Icons/IconBox";
 import SwitchNetwork from "../SwitchNetwork/SwitchNetwork";
+import Toast from "../Toast/Toast";
 
 import { useInactiveListener } from "../../utils/wallet";
 import { CHAIN_INFO } from "../../utils/constants";
@@ -55,6 +58,8 @@ function WalletModal(props) {
 
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!!activatingConnector);
+
+  const toast = useToast();
 
   function getErrorMessage(error) {
     if (error instanceof NoEthereumProviderError) {
@@ -199,7 +204,32 @@ function WalletModal(props) {
   return (
     <>
       {active ? (
-        <Redirect to="/dashboard" />
+        <>
+          {toast({
+            position: "bottom-left",
+            render: () => (
+              <Toast
+                title="Connected"
+                description="successfully connected wallet"
+                item={
+                  <Button
+                    onClick={() => {
+                      toast.closeAll();
+                    }}
+                    type="button"
+                  >
+                    X
+                  </Button>
+                }
+                titleColor="gray.400"
+                color="white"
+                bg="gray.700"
+              />
+            ),
+            duration: 5000,
+          })}
+          <Redirect to="/dashboard" />
+        </>
       ) : (
         <>
           {activatingConnector ? (
