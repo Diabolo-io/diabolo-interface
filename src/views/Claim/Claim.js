@@ -42,7 +42,7 @@ import {
 import { FaAngleDown, FaAngleDoubleDown, FaWallet } from "react-icons/fa";
 
 import { useWeb3React } from "@web3-react/core";
-import { useVesting } from "../../utils/vesting";
+import { useVestingRead, useVestingWrite } from "../../utils/vesting";
 import { useKYC, useVestingList } from "../../utils/offchain";
 
 import { CHAIN_INFO } from "../../utils/constants";
@@ -50,8 +50,10 @@ import { CHAIN_INFO } from "../../utils/constants";
 function Claim() {
   const { active, chainId } = useWeb3React();
 
+  const { loading, claim, claimFor } = useVestingWrite();
+
   //fetch vesting
-  const vesting = useVesting();
+  const vesting = useVestingRead();
 
   //fetch off chain vesting
   const vestingList = useVestingList();
@@ -463,6 +465,10 @@ function Claim() {
                                           "top left, top center, top right, center right, bottom right, bottom center, bottom left, center left",
                                         borderRadius: "0px",
                                       }}
+                                      onClick={() => {
+                                        claim(vesting[index].address);
+                                      }}
+                                      disabled={loading}
                                     >
                                       Claim
                                     </Button>
@@ -617,7 +623,7 @@ function Claim() {
                 })}
               </Grid>
             </>
-          ) : (!kyc && vesting) || (!kyc && vestingList) ? (
+          ) : !kyc && vestingList ? (
             <Flex
               justifyContent="center"
               align="center"
@@ -647,6 +653,50 @@ function Claim() {
                       <Flex>
                         <StatNumber fontSize="lg" color={textColor}>
                           {vestingList.amount} {vestingList.symbol}
+                        </StatNumber>
+                      </Flex>
+                    </Stat>
+                    <IconBox as="box" h={"45px"} w={"45px"} bg={iconTeal}>
+                      <WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />
+                    </IconBox>
+                  </Flex>
+                </CardBody>
+              </Card>
+              <KycCard textColor={textColor} functionality="Claim" />
+            </Flex>
+          ) : !kyc && vesting ? (
+            <Flex
+              justifyContent="center"
+              align="center"
+              flexDirection="column"
+              mt={{
+                md: "5%",
+                xl: "5%",
+              }}
+            >
+              <Card h="95px" w="300px" mb="25px">
+                <CardBody>
+                  <Flex
+                    flexDirection="row"
+                    align="center"
+                    justify="center"
+                    w="100%"
+                  >
+                    <Stat me="auto">
+                      <StatLabel
+                        fontSize="sm"
+                        color="gray.400"
+                        fontWeight="bold"
+                        pb=".1rem"
+                      >
+                        Investement Overview
+                      </StatLabel>
+                      <Flex>
+                        <StatNumber fontSize="lg" color={textColor}>
+                          {parseFloat(
+                            vesting["total"].totalLockedAmounts
+                          ).toFixed(2)}{" "}
+                          {vesting["total"].symbol}
                         </StatNumber>
                       </Flex>
                     </Stat>
