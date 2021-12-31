@@ -43,7 +43,6 @@ import {
 import { useWeb3React } from "@web3-react/core";
 import { useENS } from "../../utils/ens";
 import { useKYC } from "../../utils/offchain";
-import { useVesting } from "../../utils/vesting";
 
 import { CHAIN_INFO } from "../../utils/constants";
 
@@ -55,9 +54,6 @@ function Dashboard() {
 
   //fetch kyc status
   const kyc = useKYC();
-
-  //fetch vesting
-  const vesting = useVesting();
 
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
