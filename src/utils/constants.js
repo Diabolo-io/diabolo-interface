@@ -1,7 +1,7 @@
 import tokenAbi from "./abi/token";
 import erc20Abi from "./abi/erc20";
 import vestingAbi from "./abi/vesting";
-/*todo update abi*/
+
 import AssetsLogo from "./assets/token";
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY;
@@ -27,6 +27,7 @@ export const ALL_SUPPORTED_CHAIN_IDS = [
 
 export const CHAIN_INFO = {
   [SupportedChainId.MAINNET]: {
+    name: "Ethereum",
     chainId: 1,
     explorer: "https://etherscan.io/",
     infura: "https://mainnet.infura.io/v3/" + INFURA_KEY,
@@ -49,6 +50,7 @@ export const CHAIN_INFO = {
     kycLink: KYC_LINK,
   },
   [SupportedChainId.RINKEBY]: {
+    name: "Rinkeby",
     chainId: 4,
     explorer: "https://rinkeby.etherscan.io/",
     infura: "https://rinkeby.infura.io/v3/" + INFURA_KEY,
@@ -72,18 +74,14 @@ export const CHAIN_INFO = {
     kycLink: KYC_LINK,
     vesting: [
       {
-        address: "0xfe072B57251B61cbA0De6467Ce964Ff442f8997b",
-        abi: vestingAbi,
-        tokenAbi: erc20Abi,
-      },
-      {
-        address: "0xD401B40aa70498A64d141a0DA338BE0f4430Ae68",
+        address: "0xb698BfAB79484Df7b377A44bff463640611c10CB",
         abi: vestingAbi,
         tokenAbi: erc20Abi,
       },
     ],
   },
   [SupportedChainId.POLYGON]: {
+    name: "Polygon",
     chainId: 137,
     explorer: "https://polygonscan.com/",
     infura: "https://polygon.infura.io/v3/" + INFURA_KEY,
