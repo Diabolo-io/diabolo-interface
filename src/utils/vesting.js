@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 
 import { CHAIN_INFO } from "./constants";
 
-export function useVesting() {
+export function useVestingRead() {
   const [vesting, setVesting] = useState(undefined);
 
   const { account, library, chainId } = useWeb3React();
@@ -49,7 +49,7 @@ export function useVesting() {
       ];
       let colorId = 0;
 
-      for (const lockup in CHAIN_INFO[chainId].vesting) {
+      for (let lockup in CHAIN_INFO[chainId].vesting) {
         contract = new ethers.Contract(
           CHAIN_INFO[chainId].vesting[lockup].address,
           CHAIN_INFO[chainId].vesting[lockup].abi,
@@ -236,4 +236,40 @@ export function useVesting() {
   }, [account, chainId]); // recovery vesting infos
 
   return vesting;
+}
+
+export function useVestingWrite() {
+  const [loading, setLoading] = useState(false);
+
+  const { account, library, chainId } = useWeb3React();
+
+  async function claim(address) {
+    setLoading(true);
+    let lockup, contract, amount, tx;
+    for (let index in CHAIN_INFO[chainId].vesting) {
+      if (CHAIN_INFO[chainId].vesting[index].address == address) {
+        lockup = index;
+      }
+    }
+    const signer = library.getSigner();
+
+    contract = new ethers.Contract(
+      address,
+      CHAIN_INFO[chainId].vesting[lockup].abi,
+      signer
+    );
+    amount = await contract.claimableAmounts(account);
+
+    if (amount) {
+      tx = await contract.claim(account, amount).then((transferResult) => {
+        console.log("en attente");
+      });
+    } else {
+      setLoading(false);
+    }
+
+    setLoading(false);
+  }
+
+  return { loading, claim };
 }
