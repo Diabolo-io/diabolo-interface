@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import routes from "../../routes.js";
 // Chakra Imports
 import {
   ButtonGroup,
@@ -97,9 +96,16 @@ export default function HeaderLinks(props) {
                                     params: [
                                       {
                                         chainId: "0x" + id,
-                                        rpcUrl: CHAIN_INFO[id].rpcUrl,
-                                      },
-                                    ],
+                                        chainName: CHAIN_INFO[id].name,
+                                        rpcUrls: [CHAIN_INFO[id].rpcUrl],
+                                        nativeCurrency: {
+                                          name: CHAIN_INFO[id].nativeCoin.name,
+                                          symbol: CHAIN_INFO[id].nativeCoin.symbol,
+                                          decimals: CHAIN_INFO[id].nativeCoin.decimals,
+                                        },
+                                        blockExplorerUrls: [CHAIN_INFO[id].explorer],
+                                      }
+                                    ]
                                   });
                                 } catch (addError) {
                                   console.error(addError);
@@ -193,7 +199,6 @@ export default function HeaderLinks(props) {
       )}
       <SidebarResponsive
         logoText={props.logoText}
-        routes={routes}
         // logo={logo}
         {...rest}
       />
