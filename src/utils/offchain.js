@@ -17,8 +17,11 @@ export function useVestingList() {
   useEffect(async () => {
     if (account && chainId && CHAIN_INFO[chainId].vestingList) {
       let data = await fetcher(CHAIN_INFO[chainId].vestingList);
-      if (data && data[account]) {
-        setVestingList(data[account]);
+
+      let accountLower = account.toLowerCase();
+
+      if (data && data[accountLower]) {
+        setVestingList(data[accountLower]);
       } else {
         setVestingList(false);
       }
