@@ -86,7 +86,7 @@ function Dashboard() {
         <Box
           bgImage={ProfileBgImage}
           w="100%"
-          h="300px"
+          h="175px"
           borderRadius="25px"
           bgPosition="50%"
           bgRepeat="no-repeat"
@@ -110,9 +110,9 @@ function Dashboard() {
             p="24px"
             borderRadius="20px"
             transform={{
-              sm: "translateY(45%)",
-              md: "translateY(110%)",
-              lg: "translateY(160%)",
+              sm: "translateY(25%)",
+              md: "translateY(45%)",
+              lg: "translateY(75%)",
             }}
           >
             <Flex
