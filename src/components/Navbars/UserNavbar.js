@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import routes from "../../routes.js";
 // Chakra imports
 import {
   Box,
@@ -104,7 +103,6 @@ export default function UserNavbar(props) {
         >
           <SidebarResponsive
             logoText={props.logoText}
-            routes={routes}
             // logo={logo}
             {...rest}
           />

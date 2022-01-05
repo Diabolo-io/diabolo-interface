@@ -1,6 +1,5 @@
 import React, { useState, createRef } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import routes from "../routes.js";
 // Chakra imports
 import { ChakraProvider, Portal, useDisclosure } from "@chakra-ui/react";
 import Configurator from "../components/Configurator/Configurator";
@@ -16,6 +15,10 @@ import MainPanel from "../components/Layout/MainPanel";
 import PanelContainer from "../components/Layout/PanelContainer";
 import PanelContent from "../components/Layout/PanelContent";
 
+import Home from "../views/Home/Home.js";
+import Dashboard from "../views/Dashboard/Dashboard.js";
+import Claim from "../views/Claim/Claim.js";
+
 export default function Layout(props) {
   const { ...rest } = props;
   // states and functions
@@ -24,82 +27,13 @@ export default function Layout(props) {
   // ref for main panel div
   const mainPanel = createRef();
   // functions for changing the states from components
-  const getRoute = () => {
-    return window.location.pathname !== "/full-screen-maps";
-  };
 
-  const getActiveRoute = (routes) => {
-    let activeRoute = "Default Brand Text";
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse) {
-        let collapseActiveRoute = getActiveRoute(routes[i].views);
-        if (collapseActiveRoute !== activeRoute) {
-          return collapseActiveRoute;
-        }
-      } else if (routes[i].category) {
-        let categoryActiveRoute = getActiveRoute(routes[i].views);
-        if (categoryActiveRoute !== activeRoute) {
-          return categoryActiveRoute;
-        }
-      } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          return routes[i].name;
-        }
-      }
-    }
-    return activeRoute;
-  };
-  // This changes navbar state(fixed or not)
-  const getActiveNavbar = (routes) => {
-    let activeNavbar = false;
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].category) {
-        let categoryActiveNavbar = getActiveNavbar(routes[i].views);
-        if (categoryActiveNavbar !== activeNavbar) {
-          return categoryActiveNavbar;
-        }
-      } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          if (routes[i].secondaryNavbar) {
-            return routes[i].secondaryNavbar;
-          }
-        }
-      }
-    }
-    return activeNavbar;
-  };
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return getRoutes(prop.views);
-      }
-      if (prop.category === "account") {
-        return getRoutes(prop.views);
-      }
-      if (prop.layout === "/") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Chakra Color Mode
   return (
     <ChakraProvider theme={theme} resetCss={false}>
       <Sidebar
-        routes={routes}
         logoText={"DIABOLO"}
         display="none"
         sidebarVariant={sidebarVariant}
@@ -116,32 +50,25 @@ export default function Layout(props) {
           <Navbar
             onOpen={onOpen}
             logoText={"DIABOLO"}
-            brandText={getActiveRoute(routes)}
-            secondary={getActiveNavbar(routes)}
             fixed={fixed}
             {...rest}
           />
         </Portal>
-        {getRoute() ? (
-          <PanelContent>
-            <PanelContainer>
-              <Switch>
-                {getRoutes(routes)}
-                <Redirect from="/" to="/home" />
-              </Switch>
-            </PanelContainer>
-          </PanelContent>
-        ) : null}
+        <PanelContent>
+          <PanelContainer>
+            <Switch>
+              <Route path="/home" component={Home} key="0" />
+              <Route path="/dashboard" component={Dashboard} key="1" />
+              <Route path="/claim" component={Claim} key="2" />
+              <Redirect from="/" to="/home" />
+            </Switch>
+          </PanelContainer>
+        </PanelContent>
         <Footer />
         <Portal>
-          <FixedPlugin
-            secondary={getActiveNavbar(routes)}
-            fixed={fixed}
-            onOpen={onOpen}
-          />
+          <FixedPlugin fixed={fixed} onOpen={onOpen} />
         </Portal>
         <Configurator
-          secondary={getActiveNavbar(routes)}
           isOpen={isOpen}
           onClose={onClose}
           isChecked={fixed}

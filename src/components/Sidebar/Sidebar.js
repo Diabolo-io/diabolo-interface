@@ -22,10 +22,18 @@ import {
 } from "@chakra-ui/react";
 
 import IconBox from "../../components/Icons/IconBox";
-import { DiaboloLogo } from "../../components/Icons/Icons";
+import {
+  HomeIcon,
+  PersonIcon,
+  DiaboloLogo,
+} from "../../components/Icons/Icons";
 import { Separator } from "../../components/Separator/Separator";
 import { SidebarHelp } from "../../components/Sidebar/SidebarHelp";
 import { Notifs } from "../../components/Notifs/Notifs";
+
+import Home from "../../views/Home/Home.js";
+import Dashboard from "../../views/Dashboard/Dashboard.js";
+import Claim from "../../views/Claim/Claim.js";
 
 function Sidebar(props) {
   // to check for active links and opened collapses
@@ -37,6 +45,31 @@ function Sidebar(props) {
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
   };
+
+  let routes = [
+    {
+      path: "home",
+      name: "Home",
+      icon: <HomeIcon color="inherit" />,
+      component: Home,
+      layout: "/",
+    },
+    {
+      path: "dashboard",
+      name: "Dashboard",
+      icon: <PersonIcon color="inherit" />,
+      component: Dashboard,
+      layout: "/",
+    },
+    {
+      path: "claim",
+      name: "Claim",
+      icon: <PersonIcon color="inherit" />,
+      component: Claim,
+      layout: "/",
+    },
+  ];
+
   // this function creates the links and collapses that appear in the sidebar (left menu)
   const createLinks = (routes) => {
     const { sidebarVariant } = props;
@@ -168,7 +201,7 @@ function Sidebar(props) {
     });
   };
 
-  const { logoText, routes, sidebarVariant } = props;
+  const { logoText, sidebarVariant } = props;
 
   var links = <>{createLinks(routes)}</>;
   //  BRAND
@@ -248,6 +281,31 @@ export function SidebarResponsive(props) {
     return location.pathname === routeName ? "active" : "";
   };
   // this function creates the links and collapses that appear in the sidebar (left menu)
+
+  let routes = [
+    {
+      path: "home",
+      name: "Home",
+      icon: <HomeIcon color="inherit" />,
+      component: Home,
+      layout: "/",
+    },
+    {
+      path: "dashboard",
+      name: "Dashboard",
+      icon: <PersonIcon color="inherit" />,
+      component: Dashboard,
+      layout: "/",
+    },
+    {
+      path: "claim",
+      name: "Claim",
+      icon: <PersonIcon color="inherit" />,
+      component: Claim,
+      layout: "/",
+    },
+  ];
+
   const createLinks = (routes) => {
     // Chakra Color Mode
     const activeBg = useColorModeValue("white", "gray.700");
@@ -258,30 +316,6 @@ export function SidebarResponsive(props) {
     return routes.map((prop, key) => {
       if (prop.redirect) {
         return null;
-      }
-      if (prop.category) {
-        var st = {};
-        st[prop["state"]] = !state[prop.state];
-        return (
-          <>
-            <Text
-              color={activeColor}
-              fontWeight="bold"
-              mb={{
-                xl: "12px",
-              }}
-              mx="auto"
-              ps={{
-                sm: "10px",
-                xl: "16px",
-              }}
-              py="12px"
-            >
-              {prop.name}
-            </Text>
-            {createLinks(prop.views)}
-          </>
-        );
       }
       return (
         <NavLink to={prop.layout + prop.path}>
@@ -386,16 +420,14 @@ export function SidebarResponsive(props) {
       );
     });
   };
-  const { logoText, routes, ...rest } = props;
+  const { logoText, ...rest } = props;
 
   var links = <>{createLinks(routes)}</>;
   //  BRAND
   //  Chakra Color Mode
   const mainText = useColorModeValue("gray.700", "gray.200");
   let hamburgerColor = useColorModeValue("gray.500", "gray.200");
-  if (props.secondary === true) {
-    hamburgerColor = "white";
-  }
+
   var brand = (
     <Box pt={"35px"} mb="8px">
       <Link
@@ -462,23 +494,23 @@ export function SidebarResponsive(props) {
             px="1rem"
             sx={{
               "&::-webkit-scrollbar": {
-                "width": "15px",
+                width: "15px",
                 "border-radius": "25px",
               },
               "&::-webkit-scrollbar-track": {
                 "box-shadow": "inset 0 0 15px 15px #141414",
-                "border": "solid 6px transparent",
+                border: "solid 6px transparent",
                 "border-radius": "25px",
               },
 
               "&::-webkit-scrollbar-thumb": {
                 "box-shadow": "inset 0 0 15px 15px #434343",
-                "border": "solid 6px transparent",
+                border: "solid 6px transparent",
                 "border-radius": "25px",
               },
 
               "&::-webkit-scrollbar-button": {
-                "display": "none",
+                display: "none",
               },
             }}
           >
@@ -500,12 +532,10 @@ export function SidebarResponsive(props) {
 
 Sidebar.propTypes = {
   logoText: PropTypes.string,
-  routes: PropTypes.arrayOf(PropTypes.object),
   variant: PropTypes.string,
 };
 SidebarResponsive.propTypes = {
   logoText: PropTypes.string,
-  routes: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Sidebar;
