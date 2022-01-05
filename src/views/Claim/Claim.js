@@ -72,7 +72,7 @@ function Claim() {
 
   return active ? (
     <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }} my="26px">
-      {CHAIN_INFO[chainId].vesting ? (
+      {CHAIN_INFO[chainId].vesting || CHAIN_INFO[chainId].vestingList ? (
         <>
           {vesting && kyc ? (
             <>
