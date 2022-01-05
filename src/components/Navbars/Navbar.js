@@ -13,7 +13,7 @@ export default function Navbar(props) {
     ...rest
   } = props;
 
-  // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
+  // Here are all the props that may change depending on navbar's type or state.(variant, scrolled)
   let navbarPosition = "absolute";
   let navbarFilter = "none";
   let navbarBackdrop = "none";
