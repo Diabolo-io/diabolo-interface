@@ -92,15 +92,6 @@ function Connect() {
           position="absolute"
           right="0px"
         >
-          <Box
-            bgImage={connectBanner}
-            w="100%"
-            h="100%"
-            bgSize="cover"
-            bgPosition="50%"
-            position="absolute"
-            borderBottomLeftRadius="20px"
-          ></Box>
         </Box>
       </Flex>
     </Flex>
