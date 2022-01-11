@@ -9,11 +9,11 @@ const POLLING_INTERVAL = 12000;
 
 /*todo detect supported network and add it*/
 export const injected = new InjectedConnector({
-  supportedChainIds: [1,4],
+  supportedChainIds: [1],
 });
 
 export const walletconnect = new WalletConnectConnector({
-  rpc: { [4]: CHAIN_INFO[4].infura },
+  rpc: { [1]: CHAIN_INFO[1].infura },
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,

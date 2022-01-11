@@ -800,7 +800,7 @@ function Claim() {
           <SwitchNetworkCard
             textColor={textColor}
             functionality="Claim"
-            chainAvailable={[4]}
+            chainAvailable={[1]}
           />
         </Flex>
       )}
