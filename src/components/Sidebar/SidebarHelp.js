@@ -17,14 +17,11 @@ export function SidebarHelp(props) {
       alignItems="start"
       boxSize="border-box"
       p="16px"
-      h="120px"
+      h="100px"
       w="100%"
     >
-      <Text fontSize="sm" color="white" fontWeight="bold">
+      <Text fontSize="sm" color="white" fontWeight="bold" mb="9px">
         Need help?
-      </Text>
-      <Text fontSize="xs" color="white" mb="10px">
-        Please check our docs
       </Text>
       <Link w="100%" href={CHAIN_INFO[1].docLink}>
         <Button
