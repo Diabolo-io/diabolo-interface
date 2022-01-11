@@ -26,6 +26,7 @@ import externalBanner from "../../assets/img/ecosystemDiabolo.png";
 import Card from "../../components/Card/Card";
 import CardBody from "../../components/Card/CardBody";
 import IconBox from "../../components/Icons/IconBox";
+import { Notifs } from "../../components/Notifs/Notifs";
 
 // Custom icons
 import {
@@ -77,7 +78,7 @@ export default function Home() {
                 </Text>
                 <Text fontSize="sm" color="gray.400" fontWeight="normal">
                   Diabolo now provides a decentralized finance product, staking,
-                  bridge, token, and more ...
+                  bridge, token, and more.
                 </Text>
                 <Spacer />
                 <Flex align="center">
@@ -135,7 +136,6 @@ export default function Home() {
         <Card maxHeight="290.5px" p="1rem">
           <CardBody
             p="0px"
-            backgroundImage={externalBanner}
             bgPosition="center"
             bgRepeat="no-repeat"
             w="100%"
@@ -144,72 +144,29 @@ export default function Home() {
             position="relative"
             borderRadius="15px"
           >
-            <Box
-              bg="linear-gradient(360deg, rgba(49, 56, 96, 0.16) 0%, rgba(21, 25, 40, 0.88) 100%)"
-              w="100%"
-              position="absolute"
-              h="inherit"
-              borderRadius="inherit"
-              ref={overlayRef}
-            ></Box>
-            <Portal containerRef={overlayRef}>
-              <Flex
-                flexDirection="column"
-                color="white"
-                p="1.5rem 1.2rem 0.3rem 1.2rem"
-                lineHeight="1.6"
+            <Flex
+              flexDirection="column"
+              h="100%"
+            >
+              <Text fontSize="sm" color="gray.400" fontWeight="bold">
+                Last news
+              </Text>
+              <Text
+                fontSize="lg"
+                color={textColor}
+                fontWeight="bold"
+                pb=".5rem"
               >
-                <Text fontSize="xl" fontWeight="bold" pb=".3rem">
-                  Ecosystem
-                </Text>
-                <Text fontSize="sm" fontWeight="normal" w={{ lg: "92%" }}>
-                  On the diabolo website you can find all the products available
-                  soon, and ecosystem parts.
-                </Text>
-                <Spacer />
-                <Flex
-                  align="center"
-                  mt={{ sm: "20px", lg: "40px", xl: "90px" }}
-                >
-                  <Link href={CHAIN_INFO[1].mainPage} isExternal>
-                    <Button
-                      p="0px"
-                      variant="no-hover"
-                      bg="transparent"
-                      mt="12px"
-                    >
-                      <Text
-                        fontSize="sm"
-                        fontWeight="bold"
-                        _hover={{ me: "4px" }}
-                        transition="all .5s ease"
-                      >
-                        Read more
-                      </Text>
-                      <Icon
-                        as={BsArrowRight}
-                        w="20px"
-                        h="20px"
-                        fontSize="xl"
-                        transition="all .5s ease"
-                        mx=".3rem"
-                        cursor="pointer"
-                        _hover={{ transform: "translateX(20%)" }}
-                        pt="4px"
-                      />
-                    </Button>
-                  </Link>
-                </Flex>
-              </Flex>
-            </Portal>
+                Announcements
+              </Text>
+              <Notifs />
+            </Flex>
           </CardBody>
         </Card>
       </Grid>
 
-
-
-{/*todo global data*/}
-      <Grid
+      {/*todo global data*/}
+      {/*<Grid
         templateColumns={{ sm: "1fr", lg: "1fr 1fr 1fr 1fr" }}
         templateRows={{ sm: "repeat(2, 1fr)", lg: "1fr" }}
         gap="24px"
@@ -301,7 +258,7 @@ export default function Home() {
             </Flex>
           </CardBody>
         </Card>
-      </Grid>
+      </Grid>*/}
     </Flex>
   );
 }

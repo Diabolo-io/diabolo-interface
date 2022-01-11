@@ -29,7 +29,6 @@ import {
 } from "../../components/Icons/Icons";
 import { Separator } from "../../components/Separator/Separator";
 import { SidebarHelp } from "../../components/Sidebar/SidebarHelp";
-import { Notifs } from "../../components/Notifs/Notifs";
 
 import Home from "../../views/Home/Home.js";
 import Dashboard from "../../views/Dashboard/Dashboard.js";
@@ -262,7 +261,6 @@ function Sidebar(props) {
             <Box>{links}</Box>
           </Stack>
           <SidebarHelp />
-          <Notifs />
         </Box>
       </Box>
     </Box>
@@ -520,7 +518,6 @@ export function SidebarResponsive(props) {
                 <Box>{links}</Box>
               </Stack>
               <SidebarHelp />
-              <Notifs />
             </Box>
           </DrawerBody>
         </DrawerContent>
