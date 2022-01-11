@@ -22,7 +22,6 @@ import CardBody from "../Card/CardBody";
 import IconBox from "../Icons/IconBox";
 import SwitchNetwork from "../SwitchNetwork/SwitchNetwork";
 
-import { useInactiveListener } from "../../utils/wallet";
 import { CHAIN_INFO } from "../../utils/constants";
 
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
@@ -53,9 +52,6 @@ function WalletModal(props) {
       setActivatingConnector(undefined);
     }
   }, [activatingConnector, connector]);
-
-  // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
-  useInactiveListener(!!activatingConnector);
 
   function getErrorMessage(error) {
     if (error instanceof NoEthereumProviderError) {
