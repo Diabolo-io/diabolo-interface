@@ -12,7 +12,7 @@ import connectBanner from "../../assets/img/connectBanner.png";
 import {
   injected,
   walletconnect,
-  ledger,
+  //ledger,
   //trezor,
 } from "../../utils/connectors";
 
@@ -20,7 +20,7 @@ const connectorsByName = {
   MetaMask: injected,
   TrustWallet: injected,
   WalletConnect: walletconnect,
-  Ledger: ledger,
+  //Ledger: ledger,
   //Trezor: trezor,
   Web3: injected,
 };
