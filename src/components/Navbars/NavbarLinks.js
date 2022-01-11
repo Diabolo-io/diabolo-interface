@@ -16,10 +16,7 @@ import {
 } from "@chakra-ui/react";
 
 // Custom Icons
-import {
-  ProfileIcon,
-  ExitIcon,
-} from "../../components/Icons/Icons";
+import { ProfileIcon, ExitIcon } from "../../components/Icons/Icons";
 
 // Custom Components
 import { SidebarResponsive } from "../../components/Sidebar/Sidebar";
@@ -29,15 +26,11 @@ import { CHAIN_INFO } from "../../utils/constants";
 import { useWeb3React } from "@web3-react/core";
 import { useENS } from "../../utils/ens";
 import { useBalances } from "../../utils/balances";
-import { useEagerConnect } from "../../utils/wallet";
 
 export default function HeaderLinks(props) {
   const { variant, children, fixed, onOpen, ...rest } = props;
 
   const { account, chainId, deactivate, connector } = useWeb3React();
-
-  // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
-  const triedEager = useEagerConnect();
 
   //fetch ens name if exist
   const { coinBalance, tokenBalance } = useBalances();
@@ -100,12 +93,16 @@ export default function HeaderLinks(props) {
                                         rpcUrls: [CHAIN_INFO[id].rpcUrl],
                                         nativeCurrency: {
                                           name: CHAIN_INFO[id].nativeCoin.name,
-                                          symbol: CHAIN_INFO[id].nativeCoin.symbol,
-                                          decimals: CHAIN_INFO[id].nativeCoin.decimals,
+                                          symbol:
+                                            CHAIN_INFO[id].nativeCoin.symbol,
+                                          decimals:
+                                            CHAIN_INFO[id].nativeCoin.decimals,
                                         },
-                                        blockExplorerUrls: [CHAIN_INFO[id].explorer],
-                                      }
-                                    ]
+                                        blockExplorerUrls: [
+                                          CHAIN_INFO[id].explorer,
+                                        ],
+                                      },
+                                    ],
                                   });
                                 } catch (addError) {
                                   console.error(addError);
