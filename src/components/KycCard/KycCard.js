@@ -15,10 +15,6 @@ function KycCard(props) {
 
   const { chainId } = useWeb3React();
 
-  useEffect(() => {
-    loadBlockpassWidget();
-  });
-
   const loadBlockpassWidget = () => {
     const blockpass = new window.BlockpassKYCConnect(
       CHAIN_INFO[chainId].blockpassClientId,
@@ -59,6 +55,9 @@ function KycCard(props) {
             bgPosition:
               "top left, top center, top right, center right, bottom right, bottom center, bottom left, center left",
             borderRadius: "0px",
+          }}
+          onClick={() => {
+            loadBlockpassWidget();
           }}
         >
           Verify
