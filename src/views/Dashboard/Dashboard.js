@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import QRCode from "qrcode.react";
 // Chakra imports
@@ -71,6 +71,24 @@ function Dashboard() {
     "linear-gradient(73.05deg, #7f3bd5 -2.78%, #fe1ae7 101.85%)"
   );
   const iconBoxInside = useColorModeValue("white", "white");
+
+  const loadBlockpassWidget = () => {
+    if (chainId) {
+      const blockpass = new window.BlockpassKYCConnect(
+        CHAIN_INFO[chainId].blockpassClientId,
+        {
+          env: "prod", // optional
+          mainColor: "7f3bd5", // optional. Html color code or hex code without the #
+        }
+      );
+
+      blockpass.startKYCConnect();
+
+      blockpass.on("KYCConnectSuccess", () => {
+        //add code that will trigger when data have been sent.
+      });
+    }
+  };
 
   return active ? (
     <Flex direction="column">
@@ -211,26 +229,32 @@ function Dashboard() {
                   </Flex>
                 </Button>
               ) : (
-                <Link href={CHAIN_INFO[chainId].kycLink} isExternal>
-                  <Button p="0px" bg="transparent" _hover={{ bg: "none" }}>
-                    <Flex
-                      align="center"
-                      w={{ sm: "100%", lg: "200px" }}
-                      bg="hsla(0,0%,100%,.3)"
-                      borderRadius="15px"
-                      justifyContent="center"
-                      py="10px"
-                      boxShadow="inset 0 0 1px 1px hsl(0deg 0% 100% / 90%), 0 20px 27px 0 rgb(0 0 0 / 5%)"
-                      border="1px solid gray.200"
-                      cursor="pointer"
-                    >
-                      <Text fontSize="xs" color="red.600" fontWeight="bold">
-                        KYC : UNVERIFIED
-                      </Text>
-                      <Icon as={FaUserTimes} ml="6px" color="red.600" />
-                    </Flex>
-                  </Button>
-                </Link>
+                <Button
+                  id="blockpass-kyc-connect"
+                  p="0px"
+                  bg="transparent"
+                  _hover={{ bg: "none" }}
+                  onClick={() => {
+                    loadBlockpassWidget();
+                  }}
+                >
+                  <Flex
+                    align="center"
+                    w={{ sm: "100%", lg: "200px" }}
+                    bg="hsla(0,0%,100%,.3)"
+                    borderRadius="15px"
+                    justifyContent="center"
+                    py="10px"
+                    boxShadow="inset 0 0 1px 1px hsl(0deg 0% 100% / 90%), 0 20px 27px 0 rgb(0 0 0 / 5%)"
+                    border="1px solid gray.200"
+                    cursor="pointer"
+                  >
+                    <Text fontSize="xs" color="red.600" fontWeight="bold">
+                      KYC : UNVERIFIED
+                    </Text>
+                    <Icon as={FaUserTimes} ml="6px" color="red.600" />
+                  </Flex>
+                </Button>
               )}
             </Flex>
           </Flex>
