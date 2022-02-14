@@ -18,6 +18,8 @@ import PanelContent from "../components/Layout/PanelContent";
 import Home from "../views/Home/Home.js";
 import Dashboard from "../views/Dashboard/Dashboard.js";
 import Claim from "../views/Claim/Claim.js";
+import Market from "../views/Market/Market.js";
+import Vote from "../views/Vote/Vote.js";
 
 export default function Layout(props) {
   const { ...rest } = props;
@@ -60,6 +62,8 @@ export default function Layout(props) {
               <Route path="/home" component={Home} key="0" />
               <Route path="/dashboard" component={Dashboard} key="1" />
               <Route path="/claim" component={Claim} key="2" />
+              <Route path="/vote" component={Vote} key="3" />
+              {/*<Route path="/market" component={Market} key="4" />*/}
               <Redirect from="/" to="/home" />
             </Switch>
           </PanelContainer>

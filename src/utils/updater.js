@@ -9,9 +9,7 @@ export function useUpdater() {
   useEffect(() => {
     if (library) {
       let stale = false;
-      library
-        .getBlockNumber()
-        .then((blockNumber) => {
+      library.getBlockNumber().then((blockNumber) => {
           if (!stale) {
             setUpdater(blockNumber);
           }

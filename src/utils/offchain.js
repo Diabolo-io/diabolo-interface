@@ -5,8 +5,30 @@ import { CHAIN_INFO } from "./constants";
 import { useOffChainUpdater } from "./updater";
 
 export async function fetcher(...args) {
-  const res = await fetch(...args);
-  return res.json();
+  let res = undefined;
+  try {
+    res = await fetch(...args);
+    res = res.json();
+  } catch(e){
+    const res = undefined;
+  }
+  return res;
+}
+
+export function useFullVestingList() {
+  const { chainId } = useWeb3React();
+  const [fullVestingList, setFullVestingList] = useState(undefined);
+
+  useEffect(async () => {
+    if (chainId && CHAIN_INFO[chainId].vestingList) {
+      let data = await fetcher(CHAIN_INFO[chainId].vestingList);
+      setFullVestingList(data);
+    } else {
+      setFullVestingList(false);
+    }
+  }, [chainId]); // catch vesting status if account or whitelist change
+
+  return fullVestingList;
 }
 
 export function useVestingList() {
@@ -41,7 +63,7 @@ export function useKYC() {
   useEffect(async () => {
     if (account && chainId && CHAIN_INFO[chainId].kycList) {
       let data = await fetcher(CHAIN_INFO[chainId].kycList);
-      if (data && data[account]) {
+      if (data && data[account.toLowerCase()]) {
         setKyc(true);
       } else {
         setKyc(false);

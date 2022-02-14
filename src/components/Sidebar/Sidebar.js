@@ -25,6 +25,8 @@ import IconBox from "../../components/Icons/IconBox";
 import {
   HomeIcon,
   PersonIcon,
+  StatsIcon,
+  WalletIcon,
   DiaboloLogo,
 } from "../../components/Icons/Icons";
 import { Separator } from "../../components/Separator/Separator";
@@ -33,6 +35,8 @@ import { SidebarHelp } from "../../components/Sidebar/SidebarHelp";
 import Home from "../../views/Home/Home.js";
 import Dashboard from "../../views/Dashboard/Dashboard.js";
 import Claim from "../../views/Claim/Claim.js";
+import Market from "../../views/Market/Market.js";
+import Vote from "../../views/Vote/Vote.js";
 
 function Sidebar(props) {
   // to check for active links and opened collapses
@@ -63,10 +67,24 @@ function Sidebar(props) {
     {
       path: "claim",
       name: "Claim",
-      icon: <PersonIcon color="inherit" />,
+      icon: <WalletIcon color="inherit" />,
       component: Claim,
       layout: "/",
     },
+    {
+      path: "vote",
+      name: "Vote",
+      icon: <StatsIcon color="inherit" />,
+      component: Vote,
+      layout: "/",
+    },
+    /*{
+      path: "market",
+      name: "Market",
+      icon: <StatsIcon color="inherit" />,
+      component: Market,
+      layout: "/",
+    },*/
   ];
 
   // this function creates the links and collapses that appear in the sidebar (left menu)
@@ -298,10 +316,24 @@ export function SidebarResponsive(props) {
     {
       path: "claim",
       name: "Claim",
-      icon: <PersonIcon color="inherit" />,
+      icon: <WalletIcon color="inherit" />,
       component: Claim,
       layout: "/",
     },
+    {
+      path: "vote",
+      name: "Vote",
+      icon: <StatsIcon color="inherit" />,
+      component: Vote,
+      layout: "/",
+    },
+    /*{
+      path: "market",
+      name: "Market",
+      icon: <StatsIcon color="inherit" />,
+      component: Market,
+      layout: "/",
+    },*/
   ];
 
   const createLinks = (routes) => {

@@ -60,14 +60,14 @@ function Connect() {
           alignItems="center"
           justifyContent="start"
           style={{ userSelect: "none" }}
-          w={{ base: "100%", md: "50%", lg: "50%" }}
+          w={{ base: "100%", md: "100%", lg: "100%" }}
         >
           <Flex
             direction="column"
             w="100%"
             background="transparent"
             p="5px"
-            mt={{ md: "150px", lg: "80px" }}
+            mt={{ md: "150px", lg: "150px" }}
           >
             <WalletModal
               titleColor={titleColor}
@@ -75,16 +75,9 @@ function Connect() {
               WalletLogo={WalletLogo}
               connectors={connectorsByName}
             />
-            <Flex
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              maxW="100%"
-              mt="0px"
-            ></Flex>
           </Flex>
         </Flex>
-        <Box
+        {/*<Box
           display={{ base: "none", md: "block" }}
           overflowX="hidden"
           h="100%"
@@ -92,7 +85,7 @@ function Connect() {
           position="absolute"
           right="0px"
         >
-        </Box>
+        </Box>*/}
       </Flex>
     </Flex>
   );

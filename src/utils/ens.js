@@ -8,7 +8,11 @@ export function useENS() {
 
   useEffect(async () => {
     if (library) {
-      setEnsName(await library.lookupAddress(account));
+      try {
+        setEnsName(await library.lookupAddress(account));
+      } catch (e) {
+        setEnsName(null);
+      }
     } else {
       setEnsName(null);
     }

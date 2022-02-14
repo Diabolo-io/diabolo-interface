@@ -65,7 +65,7 @@ function SwitchNetworkCard(props) {
                           // check if the chain to connect to is installed
                           await window.ethereum.request({
                             method: "wallet_switchEthereumChain",
-                            params: [{ chainId: "0x" + chainAvailable[id] }], // chainId must be in hexadecimal numbers
+                            params: [{ chainId: "0x" + parseInt(chainAvailable[id]).toString(16) }], // chainId must be in hexadecimal numbers
                           });
                         } catch (error) {
                           // This error code indicates that the chain has not been added to MetaMask
